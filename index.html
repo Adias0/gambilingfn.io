@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-edition="pages">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <script>try{if(sessionStorage.getItem('lp-intro')==='1'||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))document.documentElement.classList.add('no-intro');}catch(e){}</script>
 <script src="config.js"></script>
-<script>if(!(window.LP_CONFIG&&window.LP_CONFIG.apiBase))document.documentElement.classList.add("lp-static");</script>
+<script>(function(){var c=window.LP_CONFIG;if(c&&!(c.apiBase||(c.firebase&&c.firebase.apiKey)))document.documentElement.classList.add("lp-static");})();</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -83,11 +83,12 @@
       <p class="small muted">Admins of this site can see your email, username, and game results.</p>
     </form>
     <form id="gate-login" hidden novalidate>
-      <div class="field"><label for="g-login">Email or username</label><input id="g-login" autocomplete="username" spellcheck="false" required></div>
+      <div class="field"><label for="g-login" id="g-login-label">Email or username</label><input id="g-login" autocomplete="username" spellcheck="false" required></div>
       <div class="field"><label for="g-login-pw">Password</label><input id="g-login-pw" type="password" autocomplete="current-password" required></div>
       <p class="form-err" id="g-login-err" role="alert"></p>
       <button class="btn btn-gold btn-block" id="g-login-btn" type="submit">Log in and play</button>
-      <p class="small muted">Forgot your password? Ask the site’s admin to reset it.</p>
+      <p class="small muted" id="g-forgot-note">Forgot your password? Ask the site’s admin to reset it.</p>
+      <button type="button" class="linkish" id="g-forgot" hidden>Forgot your password?</button>
     </form>
   </div>
 </div>
@@ -200,6 +201,7 @@
       <div class="bonus-amt">+2 VC</div>
       <p class="muted small">Free virtual credits once every 24 hours. They're pretend, just like the rest.</p>
       <button class="btn btn-gold btn-block" data-bonus>Claim 2 VC</button>
+      <button class="btn btn-ghost btn-block" data-redeem-lobby hidden style="margin-top:8px">Redeem a code</button>
     </div>
     <div class="panel">
       <h2>Top players</h2>
@@ -742,6 +744,17 @@
     <span class="small muted">Crossings each</span>
     <div class="seg" id="ch-rounds" role="group" aria-label="Crossings each" style="margin-top:6px"><button type="button" data-r="3" aria-pressed="false">3 crossings</button><button type="button" data-r="5" aria-pressed="true">5 crossings</button></div>
     <div class="actions"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-gold" id="ch-send">Send challenge</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-redeem" aria-labelledby="rd-title">
+  <div class="dlg">
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <h2 id="rd-title">Redeem a code</h2>
+    <p>Codes from this site’s admins add free virtual credits to your balance. Each code works once per player. Codes can’t be bought, and credits can’t be exchanged for anything.</p>
+    <div class="field"><label for="rd-code">Code</label><input id="rd-code" maxlength="40" autocomplete="off" spellcheck="false" placeholder="LP-AB12-CD34-EF56" style="text-transform:uppercase"></div>
+    <p class="small status" id="rd-status" aria-live="polite"></p>
+    <div class="actions"><button class="btn btn-ghost" data-close>Close</button><button class="btn btn-gold" id="rd-go">Redeem</button></div>
   </div>
 </dialog>
 

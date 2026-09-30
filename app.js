@@ -34,7 +34,7 @@ const GAME_NAMES = { slots: 'Pixel Reels', cross: 'Pixel Crossing', cases: 'Case
 const blankGame = () => ({ played: 0, wins: 0, losses: 0, pushes: 0, wagered: 0, returned: 0 });
 function fresh() {
   return {
-    v: 2, balance: START, name: 'You', lastBonus: 0, bonuses: 0, restarts: 0, jackpot: JACKPOT_SEED, welcomed: false, reality: 30,
+    v: 2, balance: START, name: 'You', lastBonus: 0, bonuses: 0, restarts: 0, codes: 0, redeemed: 0, jackpot: JACKPOT_SEED, welcomed: false, reality: 30,
     stats: { played: 0, wins: 0, losses: 0, pushes: 0, wagered: 0, won: 0, lost: 0, biggest: 0, biggestGame: '', jackpots: 0 },
     games: { slots: blankGame(), cross: blankGame(), cases: blankGame(), battles: blankGame(), plinko: blankGame(), roulette: blankGame(), blackjack: blankGame(), coin: blankGame() },
     history: [START]
@@ -1114,13 +1114,14 @@ async function fetchOwn() {
 }
 function acctChanged() {
   renderAcctButton();
+  renderRedeemButtons();
   $('#nav-admin').hidden = !ACCT.isAdmin;
   if ($('#view-admin').classList.contains('active')) renderAdmin();
 }
 
 /* ---------- switching between guest and account ---------- */
 function afterSwap() {
-  tweenId++; shown = S.balance; renderBalance();
+  tweenId++; shown = S.balance; renderBalance(); renderRedeemButtons();
   renderJackpot(); renderBonus(); renderBoards(); renderAcctButton(); syncNameInput();
   $('#reality').value = String(S.reality);
   if ($('#view-stats').classList.contains('active')) renderStats();
@@ -1257,7 +1258,7 @@ function showAcct(state, extra = {}) {
           <button class="btn btn-violet btn-block" type="submit">Update password</button>
           <p class="small status" id="pw-status" aria-live="polite"></p>
         </form></details>` : ''}
-      <div class="actions"><button class="btn btn-ghost" data-close data-go="profile">Edit profile</button><button class="btn btn-violet" id="logout-go">Log out</button></div>`
+      <div class="actions">${window.lpRedeem ? '<button class="btn btn-ghost" data-close data-redeem>Redeem a code</button>' : ''}<button class="btn btn-ghost" data-close data-go="profile">Edit profile</button><button class="btn btn-violet" id="logout-go">Log out</button></div>`
   };
   body.innerHTML = views[state];
   if (state === 'register') { $('#reg-email').textContent = ACCT.email ? `Signing up as ${ACCT.email}.` : ''; $('#reg-go').addEventListener('click', register); $('#reg-name').addEventListener('keydown', e => { if (e.key === 'Enter') register(); }); setTimeout(() => $('#reg-name').focus(), 50); }
@@ -1347,12 +1348,25 @@ function renderAdmin() {
         <div class="table-scroll"><table class="gtable admin-table" id="adm-table"></table></div>
         <p class="small muted" id="adm-empty" hidden style="margin:12px 0 0"></p>
       </div>
+      ${window.lpRedeem ? `<div class="panel" id="adm-codes" style="margin-top:16px">
+        <h2>Redeem codes</h2>
+        <p class="small muted">Create codes that add free virtual credits. Share them however you like; each player can use a code once. Codes can’t be sold, and credits still have no cash value.</p>
+        <div class="code-form">
+          <div class="field"><label for="cd-amount">VC per player</label><input id="cd-amount" type="number" min="0.01" max="1000" step="0.01" value="5"></div>
+          <div class="field"><label for="cd-uses">Total uses</label><input id="cd-uses" type="number" min="1" max="100000" step="1" value="50"></div>
+          <div class="field"><label for="cd-days">Expires after, in days</label><input id="cd-days" type="number" min="1" max="3650" step="1" placeholder="Never"></div>
+          <div class="field"><label for="cd-custom">Custom code</label><input id="cd-custom" maxlength="32" placeholder="Random" autocomplete="off" spellcheck="false"></div>
+        </div>
+        <button class="btn btn-gold" id="cd-create" style="margin-top:12px">Create code</button>
+        <p class="small status" id="cd-status" aria-live="polite"></p>
+        <div class="table-scroll"><table class="gtable" id="cd-table"></table></div>
+      </div>` : ''}
       <div class="two-col">
         <div class="panel"><h2>House result by game</h2><div class="table-scroll"><table class="gtable" id="adm-games"></table></div></div>
         <div class="panel">
           <h2>About this view</h2>
           <p class="small muted">Results update live as registered players play. Guests who play without an account aren’t tracked here.</p>
-          <p class="small muted">${SELF ? 'Admins are accounts made with the admin setup command on your server. Players see their own stats only.' : 'Admins are people with Editor or Owner access to this page. Players see their own stats only.'}</p>
+          <p class="small muted">${SELF ? (window.LP_FIREBASE ? 'Admins are the accounts listed in the admins collection of your Firebase project. Players see their own stats only.' : 'Admins are accounts made with the admin setup command on your server. Players see their own stats only.') : 'Admins are people with Editor or Owner access to this page. Players see their own stats only.'}</p>
           <p class="small muted">Balances are virtual credits with no cash value. LuckyPixel never pays out prizes, gift cards, or anything else of real value.</p>
         </div>
       </div>`;
@@ -1363,6 +1377,17 @@ function renderAdmin() {
       if (sb) { const k = sb.dataset.sort; if (adminSort.key === k) adminSort.dir = adminSort.dir === 'desc' ? 'asc' : 'desc'; else { adminSort.key = k; adminSort.dir = k === 'username' ? 'asc' : 'desc'; } updateAdmin(); return; }
       const tr = e.target.closest('tr[data-id]'); if (tr) openPlayer(tr.dataset.id);
     });
+    if (window.lpRedeem) {
+      $('#cd-create').addEventListener('click', createRedeemCode);
+      $('#cd-table').addEventListener('click', e => {
+        const cp = e.target.closest('[data-cd-copy]'), off = e.target.closest('[data-cd-off]');
+        if (cp) copyText(cp.dataset.cdCopy);
+        if (off) confirmDlg(`Turn off ${off.dataset.cdOff}?`, 'Players won’t be able to redeem it anymore. Credits already redeemed stay where they are.', 'Turn off code', async () => {
+          try { await window.lpRedeem.disable(off.dataset.cdOff); loadRedeemCodes(); } catch (err) { toast(err.message || 'That code couldn’t be turned off.'); }
+        });
+      });
+      loadRedeemCodes();
+    }
     $('#adm-table').addEventListener('keydown', e => { const tr = e.target.closest('tr[data-id]'); if (tr && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openPlayer(tr.dataset.id); } });
   }
   if (!adminProfUnsub) {
@@ -1446,15 +1471,15 @@ async function openPlayer(id) {
     <div class="table-scroll"><table class="gtable" style="min-width:420px"><thead><tr><th>Game</th><th>Rounds</th><th>Wins</th><th>Wagered</th><th>Net</th></tr></thead><tbody>${
       Object.keys(GAME_NAMES).map(k => { const g = r.games[k], n = round2(g.returned - g.wagered); return `<tr><td>${GAME_NAMES[k]}</td><td>${fmt(g.played)}</td><td>${fmt(g.wins)}</td><td>${fmt(g.wagered)}</td><td class="${n > 0 ? 'pos' : n < 0 ? 'neg' : ''}">${signed(n)}</td></tr>`; }).join('')
     }</tbody></table></div>
-    ${SELF ? '<p class="small status" id="pl-pw-status" aria-live="polite"></p>' : ''}
-    <div class="actions">${SELF ? '<button class="btn btn-ghost" id="pl-reset-pw">Reset password</button>' : ''}${prof ? `<button class="btn btn-ghost" id="pl-rm-photo" ${prof.thumb ? '' : 'disabled'}>Remove photo</button><button class="btn btn-ghost" id="pl-clear" ${prof.bio || prof.tags.length ? '' : 'disabled'}>Clear bio and tags</button>` : ''}<button class="btn btn-gold" data-close>Close</button></div>`;
+    ${SELF && !window.LP_FIREBASE ? '<p class="small status" id="pl-pw-status" aria-live="polite"></p>' : ''}
+    <div class="actions">${SELF && !window.LP_FIREBASE ? '<button class="btn btn-ghost" id="pl-reset-pw">Reset password</button>' : ''}${prof ? `<button class="btn btn-ghost" id="pl-rm-photo" ${prof.thumb ? '' : 'disabled'}>Remove photo</button><button class="btn btn-ghost" id="pl-clear" ${prof.bio || prof.tags.length ? '' : 'disabled'}>Clear bio and tags</button>` : ''}<button class="btn btn-gold" data-close>Close</button></div>`;
   $('#pl-title').textContent = r.username;
   if (prof) {
     $('#pl-bio').textContent = prof.bio || 'No bio.'; $('#pl-bio').classList.toggle('muted', !prof.bio);
     $('#pl-rm-photo').addEventListener('click', () => adminModerate(id, 'photo'));
     $('#pl-clear').addEventListener('click', () => adminModerate(id, 'text'));
   }
-  if (SELF) $('#pl-reset-pw').addEventListener('click', () => confirmDlg(`Reset ${r.username}’s password?`, 'They’ll be signed out everywhere and will need the temporary password you get next. Share it with them privately.', 'Reset password', async () => {
+  if (SELF && !window.LP_FIREBASE) $('#pl-reset-pw').addEventListener('click', () => confirmDlg(`Reset ${r.username}’s password?`, 'They’ll be signed out everywhere and will need the temporary password you get next. Share it with them privately.', 'Reset password', async () => {
     openDlg('dlg-player');
     const st = $('#pl-pw-status');
     try { const j = await window.lpApi('/api/admin/reset-password', { id }); st.className = 'small status good'; st.textContent = `Temporary password: ${j.password}`; }
@@ -1465,6 +1490,66 @@ async function openPlayer(id) {
   try { const ph = await ACCT.db.doc('photos/' + id).get(); const src = ph.exists ? safeImg((ph.data() || {}).photo, 90000) : ''; if (src && $('#pl-photo')) $('#pl-photo').innerHTML = `<img src="${src}" alt="">`; } catch (e) { /* keep thumbnail */ }
 }
 
+/* ---------- redeem codes ---------- */
+function renderRedeemButtons() {
+  const ok = !!window.lpRedeem && ACCT.mode === 'account';
+  $$('[data-redeem-lobby]').forEach(b => { b.hidden = !ok; });
+}
+function openRedeem() {
+  if (!window.lpRedeem || ACCT.mode !== 'account') return;
+  $('#rd-code').value = ''; $('#rd-status').textContent = ''; $('#rd-status').className = 'small status';
+  openDlg('dlg-redeem'); setTimeout(() => $('#rd-code').focus(), 50);
+}
+async function doRedeem() {
+  const st = $('#rd-status'), btn = $('#rd-go'), code = $('#rd-code').value.trim();
+  st.className = 'small status bad';
+  if (!code) { st.textContent = 'Enter a code first.'; return; }
+  btn.disabled = true; st.className = 'small status'; st.textContent = 'Checking the code…';
+  try {
+    const r = await window.lpRedeem.redeem(code), amt = round2(+r.amount || 0);
+    if (!(amt > 0)) throw { message: 'That code has no value.' };
+    S.balance = round2(S.balance + amt); S.codes = (S.codes || 0) + 1; S.redeemed = round2((S.redeemed || 0) + amt);
+    pushHistory(); save(); renderBalance(); renderBoards();
+    SFX.coins(10); pixelBurst(30);
+    st.className = 'small status good'; st.textContent = `Redeemed. ${fmt(amt)} VC was added to your balance.`;
+    $('#rd-code').value = '';
+  } catch (e) { st.className = 'small status bad'; st.textContent = (e && e.message) || 'That code couldn’t be redeemed.'; }
+  finally { btn.disabled = false; }
+}
+function randomCode() {
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const part = () => Array.from({ length: 4 }, () => A[randInt(A.length)]).join('');
+  return `LP-${part()}-${part()}-${part()}`;
+}
+async function loadRedeemCodes() {
+  const t = $('#cd-table'); if (!t) return;
+  try {
+    const list = await window.lpRedeem.list();
+    t.innerHTML = list.length ? `<thead><tr><th>Code</th><th>VC each</th><th>Used</th><th>Expires</th><th>Status</th><th></th></tr></thead><tbody>${list.map(c => {
+      const expired = c.expires && c.expires < Date.now(), full = c.uses >= c.maxUses;
+      const status = !c.active ? 'Turned off' : expired ? 'Expired' : full ? 'Used up' : 'Active';
+      return `<tr><td><code class="cd-code">${esc(c.code)}</code></td><td>${fmt(c.amount)}</td><td>${fmt(c.uses)} of ${fmt(c.maxUses)}</td><td>${c.expires ? dateOf(c.expires) : 'Never'}</td><td>${status}</td><td class="cd-actions"><button class="btn btn-sm btn-ghost" data-cd-copy="${esc(c.code)}">Copy</button>${c.active ? `<button class="btn btn-sm btn-ghost" data-cd-off="${esc(c.code)}">Turn off</button>` : ''}</td></tr>`;
+    }).join('')}</tbody>` : '<tbody><tr><td class="muted small" style="text-align:left">No codes yet.</td></tr></tbody>';
+  } catch (e) { t.innerHTML = `<tbody><tr><td class="small" style="text-align:left">${esc((e && e.message) || 'Codes couldn’t be loaded.')}</td></tr></tbody>`; }
+}
+async function createRedeemCode() {
+  const st = $('#cd-status'), btn = $('#cd-create');
+  const amount = round2(+$('#cd-amount').value), maxUses = Math.floor(+$('#cd-uses').value), days = +$('#cd-days').value;
+  const custom = $('#cd-custom').value.trim().toUpperCase().replace(/\s+/g, ''), code = custom || randomCode();
+  st.className = 'small status bad';
+  if (!(amount >= 0.01 && amount <= 1000)) { st.textContent = 'Each code can give 0.01 to 1,000 VC.'; return; }
+  if (!(maxUses >= 1 && maxUses <= 100000)) { st.textContent = 'Total uses must be 1 to 100,000.'; return; }
+  if (custom && !/^[A-Z0-9-]{4,32}$/.test(custom)) { st.textContent = 'Custom codes use 4 to 32 letters, numbers, or dashes.'; return; }
+  btn.disabled = true;
+  try {
+    const made = await window.lpRedeem.create({ code, amount, maxUses, expires: days > 0 ? Date.now() + days * 864e5 : null });
+    st.className = 'small status good';
+    st.textContent = `Created ${made}: ${fmt(amount)} VC each, up to ${fmt(maxUses)} player${maxUses === 1 ? '' : 's'}${days > 0 ? `, for ${days} day${days === 1 ? '' : 's'}` : ''}.`;
+    $('#cd-custom').value = '';
+    loadRedeemCodes();
+  } catch (e) { st.textContent = (e && e.message) || 'The code couldn’t be created.'; }
+  finally { btn.disabled = false; }
+}
 async function adminModerate(id, what) {
   try {
     if (what === 'photo') { await ACCT.db.doc('photos/' + id).delete(); await ACCT.db.doc('profiles/' + id).update({ thumb: '' }); toast('Photo removed.', 'good'); }
@@ -1474,6 +1559,9 @@ async function adminModerate(id, what) {
 }
 function buildAccounts() {
   $('#acct-btn').addEventListener('click', openAccount);
+  document.addEventListener('click', e => { if (e.target.closest('[data-redeem], [data-redeem-lobby]')) setTimeout(openRedeem, 0); });
+  $('#rd-go').addEventListener('click', doRedeem);
+  $('#rd-code').addEventListener('keydown', e => { if (e.key === 'Enter') doRedeem(); });
   renderAcctButton();
   acctReady = initAccounts().catch(() => { ACCT.status = 'unavailable'; acctChanged(); });
 }
@@ -2827,6 +2915,7 @@ function renderStats() {
     ['Net result', signed(net), net > 0 ? 'pos' : net < 0 ? 'neg' : ''],
     [st.biggestGame ? `Biggest win, ${GAME_NAMES[st.biggestGame]}` : 'Biggest win', st.biggest ? '+' + fmt(st.biggest) : '–'],
     ['Daily bonuses claimed', fmt(S.bonuses)],
+    ['Codes redeemed', S.codes ? `${fmt(S.codes)} for ${fmt(S.redeemed)} VC` : '0'],
     ['Jackpots hit', fmt(st.jackpots)],
     ['Balance restarts', fmt(S.restarts)]
   ];

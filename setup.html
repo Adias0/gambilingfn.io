@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-edition="pages">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LuckyPixel setup check</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.setup{max-width:760px;padding-top:36px;padding-bottom:60px}
+.setup h1{font-size:clamp(30px,5vw,42px);margin:14px 0 8px;letter-spacing:-.02em}
+.setup .lead{color:var(--ink-dim);margin:0 0 22px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;padding:14px 16px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line)}
+.steps .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 15px var(--font-ui);background:var(--bg-4);color:var(--ink-dim)}
+.steps li.ok .ic{background:rgba(43,212,138,.18);color:var(--green)}
+.steps li.bad{border-color:rgba(255,77,109,.55)}
+.steps li.bad .ic{background:rgba(255,77,109,.18);color:var(--red)}
+.steps li.warn{border-color:rgba(255,201,64,.5)}
+.steps li.warn .ic{background:rgba(255,201,64,.15);color:var(--gold)}
+.steps li.info .ic{background:rgba(63,182,255,.15);color:var(--blue)}
+.steps b{display:block;margin-bottom:2px}
+.steps p{margin:0;color:var(--ink-dim);font-size:15px}
+.steps code{font:600 13px ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:var(--pit);padding:1px 5px;border-radius:5px}
+.summary{margin:20px 0 0;padding:16px 18px;border-radius:16px;font-weight:600}
+.summary.ok{background:rgba(43,212,138,.1);border:1px solid rgba(43,212,138,.5)}
+.summary.bad{background:rgba(255,77,109,.08);border:1px solid rgba(255,77,109,.45)}
+.summary.warn{background:rgba(255,201,64,.08);border:1px solid rgba(255,201,64,.45)}
+.setup a{color:var(--blue)}
+</style>
+<script>
+  // Record errors inside config.js (such as a paste typo) so this page can explain them.
+  window.__cfgError = null;
+  window.addEventListener('error', function (e) { if (e && e.filename && /config\.js/.test(e.filename)) window.__cfgError = { msg: e.message, line: e.lineno }; });
+</script>
+<script src="config.js" onerror="window.__cfgMissing = true"></script>
+</head>
+<body>
+<main class="wrap setup">
+  <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+  <h1>Setup check</h1>
+  <p class="lead">This page checks your LuckyPixel settings step by step. It’s only for you as the site owner; nothing here changes your site or your data.</p>
+  <ol class="steps" id="steps"></ol>
+  <div class="summary" id="summary" hidden></div>
+  <p style="margin-top:22px;display:flex;gap:20px"><a href="./">Back to the site</a><a href="setup.html">Run the check again</a></p>
+</main>
+<script>
+(async function () {
+  const list = document.getElementById('steps'), summary = document.getElementById('summary');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let worst = 'ok';
+  function step(title, state, html) {
+    const li = document.createElement('li');
+    li.className = state;
+    li.innerHTML = `<span class="ic" aria-hidden="true">${state === 'ok' ? '✓' : state === 'bad' ? '✕' : state === 'warn' ? '!' : 'i'}</span><div><b>${esc(title)}</b><p>${html}</p></div>`;
+    list.appendChild(li);
+    if (state === 'bad') worst = 'bad'; else if (state === 'warn' && worst === 'ok') worst = 'warn';
+    return li;
+  }
+  function done(text) {
+    summary.hidden = false; summary.className = 'summary ' + worst;
+    summary.innerHTML = text || (worst === 'ok' ? 'Everything checks out. Open your site: it shows the sign-in screen, and players register before they play.' : worst === 'warn' ? 'Mostly set up. Look at the steps marked with “!” above.' : 'Fix the steps marked with “✕” above, upload the change, wait a minute, and run the check again.');
+  }
+  const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej({ code: 'timeout' }), ms))]);
+
+  // 1. config.js
+  if (window.__cfgMissing) { step('Settings file (config.js)', 'bad', 'config.js wasn’t found. Upload it to the same place as <code>index.html</code>.'); return done(); }
+  if (window.__cfgError || !window.LP_CONFIG) {
+    const e = window.__cfgError;
+    step('Settings file (config.js)', 'bad', (e ? `config.js has a mistake on line ${e.line}: <code>${esc(e.msg)}</code>. ` : 'config.js loaded but didn’t set up the settings. ') +
+      'This usually happens when the Firebase settings are pasted in the wrong place, or extra lines were copied. Paste only the block from <code>const firebaseConfig = {</code> to <code>};</code>, replacing the line <code>const firebaseConfig = null;</code>. Don’t copy the <code>import</code> lines.');
+    return done();
+  }
+  step('Settings file (config.js)', 'ok', 'Found and readable.');
+  const CFG = window.LP_CONFIG, fb = CFG.firebase, api = String(CFG.apiBase || '').trim().replace(/\/+$/, '');
+
+  // 2. which backend
+  if (!fb && !api) {
+    step('Sign-in', 'warn', 'Sign-in is <b>off</b> because config.js has no Firebase settings (and no server address). Players can still play, with progress saved in their own browser. To turn on sign-in, registration, and friends, set up Firebase as described in the README and paste its settings into config.js.');
+    return done('Sign-in is off right now. That’s why the site doesn’t show login or registration. Add your Firebase settings to config.js to turn it on.');
+  }
+
+  if (api && !fb) {
+    // 3a. own server
+    step('Sign-in method', 'ok', `Your own server at <code>${esc(api)}</code>.`);
+    try {
+      const r = await withTimeout(fetch(api + '/api/health'), 60000);
+      if (!r.ok) throw { code: 'http' };
+      step('Server is running', 'ok', 'The server answered.');
+    } catch (e) { step('Server is running', 'bad', `No answer from <code>${esc(api)}</code>. Check the address and that the server is running. Free hosts can take up to a minute to wake up, so try again shortly.`); return done(); }
+    try {
+      const r = await fetch(api + '/api/me', { headers: { 'Content-Type': 'application/json', 'X-LP': '1', 'X-LP-Token': '1' }, credentials: 'omit' });
+      if (!r.ok) throw { code: 'http' };
+      step('Server allows this site', 'ok', `The server accepts requests from <code>${esc(location.origin)}</code>.`);
+    } catch (e) { step('Server allows this site', 'bad', `The server is running but refuses this site. On the server, set <code>ALLOWED_ORIGINS=${esc(location.origin)}</code> and restart it.`); }
+    return done();
+  }
+
+  // 3b. Firebase
+  step('Sign-in method', 'ok', 'Firebase.');
+  const need = ['apiKey', 'authDomain', 'projectId', 'appId'].filter(k => !fb[k]);
+  if (need.length) { step('Firebase settings', 'bad', `These values are missing from firebaseConfig: <code>${need.join('</code>, <code>')}</code>. Copy the whole config block again from Firebase.`); return done(); }
+  step('Firebase settings', 'ok', `Project <code>${esc(fb.projectId)}</code>.`);
+
+  let A, Au, F;
+  const v = String(CFG.firebaseSdk || '10.12.2'), base = `https://www.gstatic.com/firebasejs/${v}/`;
+  try { [A, Au, F] = await withTimeout(Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]), 30000); step('Firebase library', 'ok', `Loaded version ${esc(v)}.`); }
+  catch (e) { step('Firebase library', 'bad', 'The Firebase library couldn’t load. Check your internet connection and any ad or script blockers. If it keeps failing, add <code>firebaseSdk: \'11.0.2\'</code> (or another current version) inside <code>window.LP_CONFIG</code> in config.js.'); return done(); }
+
+  const app = A.initializeApp(fb), auth = Au.getAuth(app), fs = F.getFirestore(app);
+
+  // 4. database + rules
+  try {
+    await withTimeout(F.getDoc(F.doc(fs, 'usernames/setup-check')), 15000);
+    step('Database and security rules', 'ok', 'Cloud Firestore is created and the LuckyPixel rules are published.');
+  } catch (e) {
+    const c = e && e.code, m = String(e && e.message || '');
+    if (c === 'permission-denied') step('Database and security rules', 'bad', 'The database refused access, so the LuckyPixel rules aren’t published yet. In Firebase open <b>Firestore Database → Rules</b>, replace everything with the contents of <code>firestore.rules</code>, and press <b>Publish</b>.');
+    else if (c === 'not-found' || c === 'failed-precondition' || /does not exist|not been used|disabled/i.test(m)) step('Database and security rules', 'bad', 'Cloud Firestore isn’t created yet. In Firebase open <b>Build → Firestore Database → Create database</b>, then publish the rules from <code>firestore.rules</code>.');
+    else if (c === 'timeout' || c === 'unavailable') step('Database and security rules', 'bad', 'The database didn’t answer. Make sure Cloud Firestore is created (<b>Build → Firestore Database</b>) and that projectId in config.js matches your project.');
+    else step('Database and security rules', 'bad', `The database returned an error: <code>${esc(c || m || 'unknown')}</code>.`);
+  }
+
+  // 5. email sign-in
+  try {
+    await withTimeout(Au.signInWithEmailAndPassword(auth, `setup-check-${Date.now()}@example.com`, 'setup-check-password-1'), 20000);
+    try { await Au.signOut(auth); } catch (x) { /* ignore */ }
+    step('Email sign-in', 'ok', 'Email and password sign-in is turned on.');
+  } catch (e) {
+    const c = e && e.code || '';
+    if (['auth/invalid-credential', 'auth/invalid-login-credentials', 'auth/user-not-found', 'auth/wrong-password'].includes(c)) step('Email sign-in', 'ok', 'Email and password sign-in is turned on.');
+    else if (c === 'auth/operation-not-allowed') step('Email sign-in', 'bad', 'Email sign-in is turned off. In Firebase open <b>Authentication → Sign-in method</b>, choose <b>Email/Password</b>, turn it on, and save.');
+    else if (c === 'auth/configuration-not-found') step('Email sign-in', 'bad', 'Authentication isn’t set up yet. In Firebase open <b>Build → Authentication</b> and press <b>Get started</b>, then turn on <b>Email/Password</b>.');
+    else if (/api-key|invalid-api-key/.test(c)) step('Email sign-in', 'bad', 'Firebase says the apiKey isn’t valid. Copy the config block again from <b>Project settings → General → Your apps</b>.');
+    else if (c === 'auth/unauthorized-domain') step('Email sign-in', 'bad', `This site’s address isn’t allowed. In <b>Authentication → Settings → Authorized domains</b>, add <code>${esc(location.hostname)}</code>.`);
+    else if (c === 'auth/too-many-requests') step('Email sign-in', 'warn', 'Firebase is limiting attempts right now. Wait a few minutes and run the check again.');
+    else if (c === 'timeout' || c === 'auth/network-request-failed') step('Email sign-in', 'warn', 'Couldn’t reach Firebase sign-in. Check your connection and run the check again.');
+    else step('Email sign-in', 'bad', `Firebase sign-in returned an error: <code>${esc(c || e.message || 'unknown')}</code>.`);
+  }
+
+  // 6. authorized domain reminder (email sign-in works without it, but Firebase recommends listing your site)
+  step('Your site’s address', 'info', `Make sure <code>${esc(location.hostname)}</code> is listed in <b>Authentication → Settings → Authorized domains</b>.`);
+  step('Admin access', 'info', 'After you register on the site, add your User UID as a document in the <code>admins</code> collection (see the README) to get the Admin tab.');
+  done();
+})();
+</script>
+</body>
+</html>
