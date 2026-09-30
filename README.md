@@ -2,58 +2,44 @@
 
 A fictional casino simulation that uses **virtual credits with no cash value**. There are no deposits, withdrawals, purchases, prizes, or cryptocurrency anywhere in the code.
 
-## 1. Publish it
+## Publish it (about 5 minutes)
 
 1. Create a new repository on GitHub, for example `luckypixel`.
-2. Upload **everything in this folder** to the root of the repository, including the hidden `.nojekyll` file. (On github.com: **Add file → Upload files**. If `.nojekyll` doesn't upload, create an empty file with that name using **Add file → Create new file**.)
-3. Go to **Settings → Pages**, choose **Deploy from a branch**, pick `main` and `/ (root)`, and save.
-4. After a minute or two the site is live at `https://YOUR-USERNAME.github.io/luckypixel/`.
+2. Upload **everything in this folder** to the root of the repository, including the hidden `.nojekyll` file. (On github.com, open the repo, choose **Add file → Upload files**, and drag the files in. If `.nojekyll` doesn't upload, create an empty file with that name using **Add file → Create new file**.)
+3. Go to **Settings → Pages**. Under **Build and deployment**, choose **Deploy from a branch**, pick `main` and `/ (root)`, and save.
+4. After a minute or two, the site is live at `https://YOUR-USERNAME.github.io/luckypixel/`.
 
-Right away, every game works and progress is saved in each player's browser.
+To update it later, upload the new files over the old ones.
 
-## 2. Turn on sign-in, friends, battles, redeem codes, and admin with Firebase
+## What works on GitHub Pages by itself
 
-GitHub Pages can't run a server, so accounts are stored in **Firebase**, Google's free sign-in and database service. It takes about 15 minutes, once.
+GitHub Pages only hosts files; it can't run a server. Out of the box you get:
 
-1. Go to **console.firebase.google.com**, choose **Create a project**, and name it (Google Analytics is optional; you can turn it off).
-2. **Sign-in:** open **Build → Authentication → Get started**. Under **Sign-in method**, choose **Email/Password**, turn it on, and save.
-3. **Allow your site:** in **Authentication → Settings → Authorized domains**, choose **Add domain** and enter `YOUR-USERNAME.github.io`.
-4. **Database:** open **Build → Firestore Database → Create database**. Pick a location near your players and start in **production mode**.
-5. **Security rules:** in Firestore, open the **Rules** tab, delete everything there, paste in the whole `firestore.rules` file from this folder, and press **Publish**.
-6. **Connect the site:** open **Project settings** (the gear icon) → **General** → **Your apps**, and choose the **Web** icon (`</>`). Give it a nickname and register it (you don't need Firebase Hosting). Copy the `apiKey`, `authDomain`, `projectId`, and `appId` values into `config.js`:
+- Every game: Pixel Reels, Pixel Crossing, Plinko, cases, roulette, blackjack, and coin flip
+- The intro animation, sounds, daily bonus, stats, and the leaderboard
+- Progress saved in each player's own browser (starting at 10 virtual credits)
+
+Registration, friends, matches, case battles, profiles, and the admin panel are hidden, because they need a server to store accounts that everyone shares.
+
+## Turning on accounts, friends, battles, and admin
+
+Run the LuckyPixel server (`server.js` from the **luckypixel-site** package) on a host that runs Node.js, and point this site at it:
+
+1. Deploy the **luckypixel-site** folder to a Node.js host such as Render, Railway, or Fly.io, with the start command `npm start`. Its README has the details. Use a persistent disk for its `data` folder, or accounts will be lost when the server restarts.
+2. On that server, set these environment variables:
+   - `ALLOWED_ORIGINS=https://YOUR-USERNAME.github.io` (your GitHub Pages address, no path, no trailing slash)
+   - `TRUST_PROXY=true`
+   - `COOKIE_SECURE=true`
+3. Create your admin login on the server: `node server.js create-admin`. It prints the username and password once.
+4. In this folder, edit `config.js` and put the server's address in `apiBase`, for example:
    ```js
-   firebase: {
-     apiKey: 'AIza...',
-     authDomain: 'your-project.firebaseapp.com',
-     projectId: 'your-project',
-     appId: '1:1234567890:web:abc123'
-   },
+   window.LP_CONFIG = { pages: true, apiBase: 'https://luckypixel-server.onrender.com' };
    ```
-7. Upload the changed `config.js` to your repository. Open your site: it now shows the sign-in screen, and players must register before they play.
-8. **Make yourself admin:** register on your site first. Then in Firebase open **Authentication → Users** and copy your **User UID**. Open **Firestore Database → Start collection**, name it `admins`, set the **Document ID** to your UID, add any field (for example `role` = `admin`), and save. Reload the site and the **Admin** tab appears.
+5. Upload the changed `config.js` to your repository.
 
-Add more admins the same way. Only people in `admins` can see player results, moderate profiles, and create redeem codes.
+The GitHub Pages site now shows the sign-in screen, and players must register before they play. Their accounts live on your server.
 
-### What players get with Firebase
-
-- Registration with email and password, and a **Forgot your password?** link that emails a reset link (you can edit that email in **Authentication → Templates**)
-- Profiles with photos, bios, and tags (checked with basic rules for links, contact details, money offers, and blocked words)
-- Friends, friend matches, and case battles, updating live
-- Redeem codes from admins
-
-### Redeem codes
-
-In the **Admin** tab, under **Redeem codes**, set how many VC each player gets, how many players can use the code, and an optional expiry, then choose **Create code**. Share the code however you like. Players open **Redeem a code** in the lobby or their account menu. Each player can use a code once, and you can turn a code off at any time.
-
-Codes only hand out free virtual credits. Don't sell them or trade them for anything of value: that would make the site a real gambling service.
-
-### Free plan limits
-
-Firebase's free plan allows about 50,000 database reads and 20,000 writes a day. Each game round saves the player's record once, so that's plenty for a small community. If you outgrow it, Firebase will ask before charging anything.
-
-## Or use your own server instead of Firebase
-
-If you run `server.js` from the **luckypixel-site** package on a Node.js host, leave `firebase` as `null` and put the server's address in `apiBase` in `config.js`. On that server, set `ALLOWED_ORIGINS=https://YOUR-USERNAME.github.io`. That package's README has the details.
+If the page says it can't connect, the server may be asleep (free hosts pause idle apps and take up to a minute to wake), or `ALLOWED_ORIGINS` doesn't match your GitHub Pages address exactly.
 
 ## Files
 
@@ -62,13 +48,10 @@ If you run `server.js` from the **luckypixel-site** package on a Node.js host, l
 | `index.html` | The page, including the intro and sign-in screen |
 | `styles.css` | All the styling |
 | `app.js` | The games and the rest of the site |
-| `lp-platform.js` | Connects to Firebase or your server, based on `config.js` |
-| `config.js` | Your settings |
-| `firestore.rules` | Security rules to paste into Firebase |
+| `lp-platform.js` | Connects to your server when `config.js` has an address |
+| `config.js` | The one setting you may need to change |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are |
 
-## Good to know
+## Keep it virtual
 
-- The Firebase settings in `config.js` are meant to be public. Your data is protected by `firestore.rules`, which only let players change their own things.
-- Game results are calculated in the player's browser, so someone technical could edit their own balance. That's harmless with virtual credits, but treat balances as for fun.
-- The site promises that credits have no cash value. Adding deposits, paid credits, prizes, gift cards, or cash-outs would turn it into a real gambling service, which needs a license in almost every country.
+The site promises that credits have no cash value. Adding deposits, paid credits, prizes, gift cards, or cash-outs would turn it into a real gambling service, which needs a license in almost every country and would make those promises false.

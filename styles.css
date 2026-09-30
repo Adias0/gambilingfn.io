@@ -16,7 +16,6 @@
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#120a24; } }
 :root[data-theme="dark"]{ --bg:#120a24; }
 *,*::before,*::after{box-sizing:inherit}
-[hidden]{display:none !important}
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg);-webkit-text-size-adjust:100%}
 body{
   margin:0;color:var(--ink);font-family:var(--font-ui);font-size:16px;line-height:1.55;min-height:100vh;
@@ -713,14 +712,6 @@ html.no-intro .intro{display:none}
 .seg.seg3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .seg3 button{padding:10px 4px;font-size:14px}
 
-/* ---------- Redeem codes ---------- */
-.code-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-@media (max-width:760px){.code-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.cd-code{font:700 13px var(--font-pixel);color:var(--gold);letter-spacing:.03em}
-.cd-actions{white-space:nowrap}
-.cd-actions .btn{margin-left:4px}
-#cd-table{margin-top:10px}
-
 /* ---------- Footer ---------- */
 footer{border-top:1px solid var(--line);margin-top:30px;padding:28px 0 40px;color:var(--ink-dim);font-size:14px}
 footer .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
@@ -791,5 +782,3 @@ html.gate-on{overflow:hidden}
 .gate-offline p{margin:0 0 12px;color:var(--ink)}
 .gate-offline[hidden]{display:none}
 html.lp-static .gate{display:none !important}
-.gate .form-err.ok{color:var(--green) !important}
-.linkish{appearance:none;background:none;border:0;padding:0;color:var(--blue);font:600 14px var(--font-ui);cursor:pointer;justify-self:start;text-decoration:underline;text-underline-offset:3px}
