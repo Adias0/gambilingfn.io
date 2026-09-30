@@ -1,0 +1,11 @@
+# Words that the basic content check rejects in tags and bios (one per line, not case sensitive).
+# Used when no ANTHROPIC_API_KEY is set, and as a fallback if an AI check fails.
+# Add slurs and any other terms you want to block for your community.
+fuck
+shit
+bitch
+cunt
+asshole
+bastard
+whore
+slut

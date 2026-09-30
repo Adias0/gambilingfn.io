@@ -1,0 +1,13 @@
+{
+  "name": "luckypixel-casino",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LuckyPixel Casino: a fictional casino simulation that uses virtual credits only.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "create-admin": "node server.js create-admin"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED"
+}
