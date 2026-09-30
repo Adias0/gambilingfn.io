@@ -1,15 +1,29 @@
 /*
- * LuckyPixel settings for the GitHub Pages copy.
+ * LuckyPixel settings for the GitHub Pages copy. Pick one way to run accounts:
  *
- * Leave apiBase empty to run without a server: every game works, and each player's
- * progress is saved in their own browser. Accounts, friends, case battles, and the
- * admin panel are hidden.
+ *  1. Nothing (leave firebase null and apiBase empty): every game works and progress is saved
+ *     in each player's browser. Sign-in, friends, battles, redeem codes, and admin are hidden.
  *
- * To turn those on, run server.js from the luckypixel-site package on a Node.js host,
- * set ALLOWED_ORIGINS on that server to this site's address (for example
- * https://yourname.github.io), and put the server's address below.
+ *  2. Firebase (free, nothing to run): paste your Firebase web app settings below.
+ *     README.md walks through it step by step.
+ *
+ *  3. Your own LuckyPixel server (server.js): put its address in apiBase.
+ *
+ * These Firebase values are meant to be public. Your data is protected by firestore.rules.
  */
 window.LP_CONFIG = {
   pages: true,
-  apiBase: ''   // for example: 'https://luckypixel-server.onrender.com'
+
+  firebase: null,
+  // firebase: {
+  //   apiKey: 'AIza...',
+  //   authDomain: 'your-project.firebaseapp.com',
+  //   projectId: 'your-project',
+  //   appId: '1:1234567890:web:abc123'
+  // },
+
+  apiBase: '',   // for example: 'https://luckypixel-server.onrender.com'
+
+  // Optional: extra words to block in player tags and bios (used with Firebase).
+  blockedWords: []
 };

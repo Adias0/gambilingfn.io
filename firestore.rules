@@ -1,0 +1,109 @@
+rules_version = '2';
+
+// Security rules for LuckyPixel Casino on Firebase.
+// Paste this into Firebase console → Firestore Database → Rules, then press Publish.
+// Players can only change their own data. Admins are listed in the "admins" collection.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isMe(uid) { return signedIn() && request.auth.uid == uid; }
+    function isAdmin() { return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
+
+    // Add an admin: create a document in "admins" whose ID is the person's User UID (from Authentication).
+    match /admins/{uid} {
+      allow read: if isMe(uid) || isAdmin();
+      allow write: if false;
+    }
+
+    // Private account details (username and email). Only the player and admins can read them.
+    match /accounts/{uid} {
+      allow read: if isMe(uid) || isAdmin();
+      allow create: if isMe(uid)
+        && request.resource.data.keys().hasOnly(['username', 'email', 'created'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.username is string
+        && getAfter(/databases/$(database)/documents/usernames/$(request.resource.data.username.lower())).data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // Usernames are claimed once, so no two players can share one.
+    match /usernames/{name} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && name.matches('^[a-z0-9_-]{3,16}$')
+        && !name.matches('.*(admin|moderator|staff|official|support).*');
+      allow update, delete: if false;
+    }
+
+    // Balances and game stats: the player and admins.
+    match /players/{uid} {
+      allow read, write: if isMe(uid) || isAdmin();
+    }
+
+    // Public profile and photo: every signed-in player can see them; only the owner (or an admin) changes them.
+    match /profiles/{uid} {
+      allow read: if signedIn();
+      allow write: if isMe(uid) || isAdmin();
+    }
+    match /photos/{uid} {
+      allow read: if signedIn();
+      allow write: if isMe(uid) || isAdmin();
+    }
+    match /names/{name} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() && request.resource.data.owner == request.auth.uid
+        && (resource == null || resource.data.owner == request.auth.uid);
+      allow delete: if signedIn() && resource.data.owner == request.auth.uid;
+    }
+
+    // Friend matches and case battles: only the two players involved.
+    function canSeeDuel() { return signedIn() && (resource == null || resource.data.a == request.auth.uid || resource.data.b == request.auth.uid || isAdmin()); }
+    function canCreateDuel() {
+      return signedIn() && request.resource.data.a == request.auth.uid
+        && request.resource.data.b is string && request.resource.data.b != request.auth.uid
+        && exists(/databases/$(database)/documents/accounts/$(request.resource.data.b));
+    }
+    function canUpdateDuel() {
+      return signedIn() && (resource.data.a == request.auth.uid || resource.data.b == request.auth.uid)
+        && request.resource.data.a == resource.data.a && request.resource.data.b == resource.data.b;
+    }
+    match /matches/{id} {
+      allow read: if canSeeDuel();
+      allow create: if canCreateDuel();
+      allow update: if canUpdateDuel();
+      allow delete: if signedIn() && resource.data.a == request.auth.uid;
+    }
+    match /battles/{id} {
+      allow read: if canSeeDuel();
+      allow create: if canCreateDuel();
+      allow update: if canUpdateDuel();
+      allow delete: if signedIn() && resource.data.a == request.auth.uid;
+    }
+
+    // Redeem codes. Players can look up a code they already know, but can't list codes.
+    // Redeeming adds 1 to "uses" and records a claim, once per player, in the same step.
+    match /codes/{code} {
+      allow get: if signedIn();
+      allow list: if isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['uses'])
+        && request.resource.data.uses == resource.data.uses + 1
+        && resource.data.active == true
+        && resource.data.uses < resource.data.maxUses
+        && (resource.data.expires == null || resource.data.expires > request.time.toMillis())
+        && !exists(/databases/$(database)/documents/codes/$(code)/claims/$(request.auth.uid))
+        && existsAfter(/databases/$(database)/documents/codes/$(code)/claims/$(request.auth.uid)));
+
+      match /claims/{uid} {
+        allow read: if isMe(uid) || isAdmin();
+        allow create: if isMe(uid)
+          && getAfter(/databases/$(database)/documents/codes/$(code)).data.uses == get(/databases/$(database)/documents/codes/$(code)).data.uses + 1;
+        allow update, delete: if false;
+      }
+    }
+  }
+}
