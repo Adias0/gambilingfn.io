@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LuckyPixel Casino (Demo, virtual credits only)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8D%80%3C/text%3E%3C/svg%3E">
+<meta name="description" content="A fictional casino simulation. Virtual credits only. No real money, purchases, prizes, or withdrawals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<script>try{if(sessionStorage.getItem('lp-intro')==='1'||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))document.documentElement.classList.add('no-intro');}catch(e){}</script>
+<script src="config.js"></script>
+<script>if(!(window.LP_CONFIG&&window.LP_CONFIG.apiBase))document.documentElement.classList.add("lp-static");</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="intro" id="intro" role="presentation">
+  <button class="intro-skip" type="button">Skip intro</button>
+  <div class="intro-stage">
+    <div class="intro-card">
+      <div class="intro-bulbs" aria-hidden="true"></div>
+      <div class="intro-shine" aria-hidden="true"></div>
+      <svg class="intro-clover" viewBox="0 0 9 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="1.02" height="1.02" fill="#b25bff" style="--dx:2.4px;--dy:34.0px;--r:40deg;--d:0.50s"/><rect x="2" y="0" width="1.02" height="1.02" fill="#b25bff" style="--dx:31.3px;--dy:10.0px;--r:-50deg;--d:0.10s"/><rect x="6" y="0" width="1.02" height="1.02" fill="#b25bff" style="--dx:32.4px;--dy:14.9px;--r:170deg;--d:0.32s"/><rect x="7" y="0" width="1.02" height="1.02" fill="#b25bff" style="--dx:-24.9px;--dy:7.8px;--r:38deg;--d:0.43s"/><rect x="0" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:4.3px;--dy:-22.8px;--r:-9deg;--d:0.46s"/><rect x="1" y="1" width="1.02" height="1.02" fill="#e9c8ff" style="--dx:-16.0px;--dy:18.7px;--r:-147deg;--d:0.42s"/><rect x="2" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:11.0px;--dy:-18.9px;--r:-116deg;--d:0.52s"/><rect x="3" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:17.3px;--dy:16.7px;--r:-16deg;--d:0.13s"/><rect x="5" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:20.9px;--dy:18.2px;--r:98deg;--d:0.12s"/><rect x="6" y="1" width="1.02" height="1.02" fill="#e9c8ff" style="--dx:-27.1px;--dy:-21.2px;--r:-84deg;--d:0.35s"/><rect x="7" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:-12.6px;--dy:16.7px;--r:4deg;--d:0.40s"/><rect x="8" y="1" width="1.02" height="1.02" fill="#b25bff" style="--dx:-6.4px;--dy:16.3px;--r:135deg;--d:0.36s"/><rect x="0" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:-26.1px;--dy:24.7px;--r:-6deg;--d:0.16s"/><rect x="1" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:-0.8px;--dy:34.2px;--r:32deg;--d:0.30s"/><rect x="2" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:10.7px;--dy:21.0px;--r:-116deg;--d:0.08s"/><rect x="3" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:-11.0px;--dy:-28.7px;--r:-128deg;--d:0.32s"/><rect x="5" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:-1.7px;--dy:-33.4px;--r:-46deg;--d:0.26s"/><rect x="6" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:-20.8px;--dy:-24.6px;--r:1deg;--d:0.30s"/><rect x="7" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:7.8px;--dy:-34.2px;--r:-63deg;--d:0.48s"/><rect x="8" y="2" width="1.02" height="1.02" fill="#b25bff" style="--dx:5.3px;--dy:19.4px;--r:162deg;--d:0.40s"/><rect x="1" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:3.9px;--dy:14.6px;--r:-74deg;--d:0.45s"/><rect x="2" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:1.2px;--dy:-18.6px;--r:3deg;--d:0.42s"/><rect x="3" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:-18.5px;--dy:10.6px;--r:-53deg;--d:0.17s"/><rect x="4" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:12.7px;--dy:-13.4px;--r:64deg;--d:0.39s"/><rect x="5" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:-18.5px;--dy:7.3px;--r:9deg;--d:0.23s"/><rect x="6" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:18.2px;--dy:13.3px;--r:-12deg;--d:0.42s"/><rect x="7" y="3" width="1.02" height="1.02" fill="#b25bff" style="--dx:20.0px;--dy:-23.7px;--r:-97deg;--d:0.39s"/><rect x="3" y="4" width="1.02" height="1.02" fill="#b25bff" style="--dx:-13.5px;--dy:-8.0px;--r:87deg;--d:0.45s"/><rect x="4" y="4" width="1.02" height="1.02" fill="#e9c8ff" style="--dx:-30.2px;--dy:-12.6px;--r:-160deg;--d:0.42s"/><rect x="5" y="4" width="1.02" height="1.02" fill="#b25bff" style="--dx:-33.0px;--dy:14.1px;--r:148deg;--d:0.17s"/><rect x="1" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:-6.5px;--dy:32.0px;--r:112deg;--d:0.52s"/><rect x="2" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:14.0px;--dy:-4.3px;--r:138deg;--d:0.19s"/><rect x="3" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:19.2px;--dy:-2.3px;--r:153deg;--d:0.46s"/><rect x="4" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:-15.8px;--dy:-21.1px;--r:-46deg;--d:0.16s"/><rect x="5" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:14.0px;--dy:2.4px;--r:-131deg;--d:0.42s"/><rect x="6" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:18.8px;--dy:11.5px;--r:-3deg;--d:0.53s"/><rect x="7" y="5" width="1.02" height="1.02" fill="#b25bff" style="--dx:9.8px;--dy:24.3px;--r:2deg;--d:0.26s"/><rect x="0" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-14.8px;--dy:-3.6px;--r:64deg;--d:0.19s"/><rect x="1" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-16.8px;--dy:6.4px;--r:89deg;--d:0.42s"/><rect x="2" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-15.1px;--dy:6.9px;--r:148deg;--d:0.12s"/><rect x="3" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-14.8px;--dy:-9.0px;--r:124deg;--d:0.25s"/><rect x="5" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-15.5px;--dy:-18.6px;--r:-83deg;--d:0.23s"/><rect x="6" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-8.6px;--dy:-18.8px;--r:-175deg;--d:0.43s"/><rect x="7" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-25.2px;--dy:-10.3px;--r:95deg;--d:0.32s"/><rect x="8" y="6" width="1.02" height="1.02" fill="#b25bff" style="--dx:-4.4px;--dy:18.0px;--r:164deg;--d:0.44s"/><rect x="0" y="7" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:20.8px;--dy:3.7px;--r:7deg;--d:0.11s"/><rect x="1" y="7" width="1.02" height="1.02" fill="#b25bff" style="--dx:-33.6px;--dy:-5.2px;--r:-26deg;--d:0.49s"/><rect x="2" y="7" width="1.02" height="1.02" fill="#b25bff" style="--dx:35.7px;--dy:1.7px;--r:-92deg;--d:0.27s"/><rect x="3" y="7" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:17.9px;--dy:-7.6px;--r:-131deg;--d:0.51s"/><rect x="5" y="7" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:13.8px;--dy:16.2px;--r:-168deg;--d:0.32s"/><rect x="6" y="7" width="1.02" height="1.02" fill="#b25bff" style="--dx:12.3px;--dy:26.2px;--r:153deg;--d:0.28s"/><rect x="7" y="7" width="1.02" height="1.02" fill="#b25bff" style="--dx:30.9px;--dy:12.0px;--r:-17deg;--d:0.09s"/><rect x="8" y="7" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:-30.2px;--dy:-2.8px;--r:-76deg;--d:0.26s"/><rect x="1" y="8" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:-29.9px;--dy:-13.9px;--r:171deg;--d:0.36s"/><rect x="2" y="8" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:11.1px;--dy:9.0px;--r:-109deg;--d:0.50s"/><rect x="4" y="8" width="1.02" height="1.02" fill="#ffd84a" style="--dx:-27.6px;--dy:-15.8px;--r:69deg;--d:0.41s"/><rect x="6" y="8" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:15.3px;--dy:24.0px;--r:-99deg;--d:0.10s"/><rect x="7" y="8" width="1.02" height="1.02" fill="#6c2bd9" style="--dx:21.9px;--dy:-14.5px;--r:-48deg;--d:0.47s"/><rect x="4" y="9" width="1.02" height="1.02" fill="#ffd84a" style="--dx:12.3px;--dy:-23.4px;--r:-179deg;--d:0.26s"/></svg>
+      <div class="intro-word" aria-label="LuckyPixel"><span class="w "><i style="--i:0">L</i><i style="--i:1">u</i><i style="--i:2">c</i><i style="--i:3">k</i><i style="--i:4">y</i></span><span class="w gold"><i style="--i:5">P</i><i style="--i:6">i</i><i style="--i:7">x</i><i style="--i:8">e</i><i style="--i:9">l</i></span></div>
+      <div class="intro-reels" aria-hidden="true"><div class="ireel"><div class="istrip" style="--t:0.9s"><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="1" height="1" fill="#1f9a57"/><rect x="7" y="0" width="1" height="1" fill="#46e08a"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="6" y="1" width="2" height="1" fill="#46e08a"/><rect x="3" y="2" width="4" height="1" fill="#e8f55a"/><rect x="2" y="3" width="1" height="1" fill="#e8f55a"/><rect x="3" y="3" width="2" height="1" fill="#ffffff"/><rect x="5" y="3" width="3" height="1" fill="#e8f55a"/><rect x="1" y="4" width="1" height="1" fill="#e8f55a"/><rect x="2" y="4" width="1" height="1" fill="#ffffff"/><rect x="3" y="4" width="6" height="1" fill="#e8f55a"/><rect x="0" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="5" width="8" height="1" fill="#e8f55a"/><rect x="9" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="6" width="7" height="1" fill="#e8f55a"/><rect x="8" y="6" width="1" height="1" fill="#9fb020"/><rect x="1" y="7" width="1" height="1" fill="#9fb020"/><rect x="2" y="7" width="5" height="1" fill="#e8f55a"/><rect x="7" y="7" width="2" height="1" fill="#9fb020"/><rect x="2" y="8" width="6" height="1" fill="#9fb020"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#3fb6ff"/><rect x="4" y="1" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="2" width="1" height="1" fill="#3fb6ff"/><rect x="4" y="2" width="1" height="1" fill="#b8ecff"/><rect x="5" y="2" width="2" height="1" fill="#3fb6ff"/><rect x="0" y="3" width="4" height="1" fill="#3fb6ff"/><rect x="4" y="3" width="1" height="1" fill="#b8ecff"/><rect x="5" y="3" width="5" height="1" fill="#3fb6ff"/><rect x="1" y="4" width="8" height="1" fill="#3fb6ff"/><rect x="2" y="5" width="6" height="1" fill="#3fb6ff"/><rect x="2" y="6" width="6" height="1" fill="#3fb6ff"/><rect x="1" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="4" y="7" width="2" height="1" fill="#1d63c9"/><rect x="6" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="1" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="8" width="1" height="1" fill="#1d63c9"/><rect x="6" y="8" width="1" height="1" fill="#1d63c9"/><rect x="7" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="1" y="9" width="1" height="1" fill="#3fb6ff"/><rect x="2" y="9" width="1" height="1" fill="#1d63c9"/><rect x="7" y="9" width="1" height="1" fill="#1d63c9"/><rect x="8" y="9" width="1" height="1" fill="#3fb6ff"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="2" y="1" width="1" height="1" fill="#b25bff"/><rect x="3" y="1" width="4" height="1" fill="#e9c8ff"/><rect x="7" y="1" width="1" height="1" fill="#b25bff"/><rect x="1" y="2" width="1" height="1" fill="#b25bff"/><rect x="2" y="2" width="1" height="1" fill="#e9c8ff"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="2" height="1" fill="#e9c8ff"/><rect x="6" y="2" width="3" height="1" fill="#b25bff"/><rect x="0" y="3" width="1" height="1" fill="#b25bff"/><rect x="1" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="2" y="3" width="6" height="1" fill="#b25bff"/><rect x="8" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="9" y="3" width="1" height="1" fill="#b25bff"/><rect x="0" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="4" width="8" height="1" fill="#b25bff"/><rect x="9" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="5" width="6" height="1" fill="#b25bff"/><rect x="8" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="6" width="4" height="1" fill="#b25bff"/><rect x="7" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="7" width="2" height="1" fill="#b25bff"/><rect x="6" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="8" width="2" height="1" fill="#6c2bd9"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#c98a00"/><rect x="3" y="1" width="4" height="1" fill="#ffd84a"/><rect x="2" y="2" width="1" height="1" fill="#ffd84a"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="3" height="1" fill="#ffd84a"/><rect x="7" y="2" width="1" height="1" fill="#c98a00"/><rect x="2" y="3" width="1" height="1" fill="#ffd84a"/><rect x="3" y="3" width="1" height="1" fill="#ffffff"/><rect x="4" y="3" width="3" height="1" fill="#ffd84a"/><rect x="7" y="3" width="1" height="1" fill="#c98a00"/><rect x="2" y="4" width="1" height="1" fill="#ffd84a"/><rect x="3" y="4" width="1" height="1" fill="#ffffff"/><rect x="4" y="4" width="3" height="1" fill="#ffd84a"/><rect x="7" y="4" width="1" height="1" fill="#c98a00"/><rect x="1" y="5" width="7" height="1" fill="#ffd84a"/><rect x="8" y="5" width="1" height="1" fill="#c98a00"/><rect x="0" y="6" width="9" height="1" fill="#ffd84a"/><rect x="9" y="6" width="1" height="1" fill="#c98a00"/><rect x="0" y="7" width="10" height="1" fill="#c98a00"/><rect x="4" y="8" width="2" height="1" fill="#ff9a3d"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#c98a00"/><rect x="3" y="1" width="4" height="1" fill="#ffd84a"/><rect x="2" y="2" width="1" height="1" fill="#ffd84a"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="3" height="1" fill="#ffd84a"/><rect x="7" y="2" width="1" height="1" fill="#c98a00"/><rect x="2" y="3" width="1" height="1" fill="#ffd84a"/><rect x="3" y="3" width="1" height="1" fill="#ffffff"/><rect x="4" y="3" width="3" height="1" fill="#ffd84a"/><rect x="7" y="3" width="1" height="1" fill="#c98a00"/><rect x="2" y="4" width="1" height="1" fill="#ffd84a"/><rect x="3" y="4" width="1" height="1" fill="#ffffff"/><rect x="4" y="4" width="3" height="1" fill="#ffd84a"/><rect x="7" y="4" width="1" height="1" fill="#c98a00"/><rect x="1" y="5" width="7" height="1" fill="#ffd84a"/><rect x="8" y="5" width="1" height="1" fill="#c98a00"/><rect x="0" y="6" width="9" height="1" fill="#ffd84a"/><rect x="9" y="6" width="1" height="1" fill="#c98a00"/><rect x="0" y="7" width="10" height="1" fill="#c98a00"/><rect x="4" y="8" width="2" height="1" fill="#ff9a3d"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#c98a00"/><rect x="3" y="1" width="4" height="1" fill="#ffd84a"/><rect x="2" y="2" width="1" height="1" fill="#ffd84a"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="3" height="1" fill="#ffd84a"/><rect x="7" y="2" width="1" height="1" fill="#c98a00"/><rect x="2" y="3" width="1" height="1" fill="#ffd84a"/><rect x="3" y="3" width="1" height="1" fill="#ffffff"/><rect x="4" y="3" width="3" height="1" fill="#ffd84a"/><rect x="7" y="3" width="1" height="1" fill="#c98a00"/><rect x="2" y="4" width="1" height="1" fill="#ffd84a"/><rect x="3" y="4" width="1" height="1" fill="#ffffff"/><rect x="4" y="4" width="3" height="1" fill="#ffd84a"/><rect x="7" y="4" width="1" height="1" fill="#c98a00"/><rect x="1" y="5" width="7" height="1" fill="#ffd84a"/><rect x="8" y="5" width="1" height="1" fill="#c98a00"/><rect x="0" y="6" width="9" height="1" fill="#ffd84a"/><rect x="9" y="6" width="1" height="1" fill="#c98a00"/><rect x="0" y="7" width="10" height="1" fill="#c98a00"/><rect x="4" y="8" width="2" height="1" fill="#ff9a3d"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="1" y="0" width="8" height="1" fill="#ff4d6d"/><rect x="1" y="1" width="1" height="1" fill="#ff4d6d"/><rect x="2" y="1" width="1" height="1" fill="#ffffff"/><rect x="3" y="1" width="6" height="1" fill="#ff4d6d"/><rect x="9" y="1" width="1" height="1" fill="#b8203f"/><rect x="1" y="2" width="5" height="1" fill="#b8203f"/><rect x="6" y="2" width="2" height="1" fill="#ff4d6d"/><rect x="8" y="2" width="1" height="1" fill="#b8203f"/><rect x="5" y="3" width="2" height="1" fill="#ff4d6d"/><rect x="7" y="3" width="1" height="1" fill="#b8203f"/><rect x="4" y="4" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="4" width="1" height="1" fill="#b8203f"/><rect x="4" y="5" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="5" width="1" height="1" fill="#b8203f"/><rect x="3" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="6" width="1" height="1" fill="#b8203f"/><rect x="3" y="7" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="7" width="1" height="1" fill="#b8203f"/><rect x="2" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="4" y="8" width="1" height="1" fill="#b8203f"/><rect x="2" y="9" width="2" height="1" fill="#b8203f"/></svg></span></div></div><div class="ireel"><div class="istrip" style="--t:1.1s"><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#3fb6ff"/><rect x="4" y="1" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="2" width="1" height="1" fill="#3fb6ff"/><rect x="4" y="2" width="1" height="1" fill="#b8ecff"/><rect x="5" y="2" width="2" height="1" fill="#3fb6ff"/><rect x="0" y="3" width="4" height="1" fill="#3fb6ff"/><rect x="4" y="3" width="1" height="1" fill="#b8ecff"/><rect x="5" y="3" width="5" height="1" fill="#3fb6ff"/><rect x="1" y="4" width="8" height="1" fill="#3fb6ff"/><rect x="2" y="5" width="6" height="1" fill="#3fb6ff"/><rect x="2" y="6" width="6" height="1" fill="#3fb6ff"/><rect x="1" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="4" y="7" width="2" height="1" fill="#1d63c9"/><rect x="6" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="1" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="8" width="1" height="1" fill="#1d63c9"/><rect x="6" y="8" width="1" height="1" fill="#1d63c9"/><rect x="7" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="1" y="9" width="1" height="1" fill="#3fb6ff"/><rect x="2" y="9" width="1" height="1" fill="#1d63c9"/><rect x="7" y="9" width="1" height="1" fill="#1d63c9"/><rect x="8" y="9" width="1" height="1" fill="#3fb6ff"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="1" height="1" fill="#1f9a57"/><rect x="7" y="0" width="1" height="1" fill="#46e08a"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="6" y="1" width="2" height="1" fill="#46e08a"/><rect x="3" y="2" width="4" height="1" fill="#e8f55a"/><rect x="2" y="3" width="1" height="1" fill="#e8f55a"/><rect x="3" y="3" width="2" height="1" fill="#ffffff"/><rect x="5" y="3" width="3" height="1" fill="#e8f55a"/><rect x="1" y="4" width="1" height="1" fill="#e8f55a"/><rect x="2" y="4" width="1" height="1" fill="#ffffff"/><rect x="3" y="4" width="6" height="1" fill="#e8f55a"/><rect x="0" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="5" width="8" height="1" fill="#e8f55a"/><rect x="9" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="6" width="7" height="1" fill="#e8f55a"/><rect x="8" y="6" width="1" height="1" fill="#9fb020"/><rect x="1" y="7" width="1" height="1" fill="#9fb020"/><rect x="2" y="7" width="5" height="1" fill="#e8f55a"/><rect x="7" y="7" width="2" height="1" fill="#9fb020"/><rect x="2" y="8" width="6" height="1" fill="#9fb020"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#c98a00"/><rect x="3" y="1" width="4" height="1" fill="#ffd84a"/><rect x="2" y="2" width="1" height="1" fill="#ffd84a"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="3" height="1" fill="#ffd84a"/><rect x="7" y="2" width="1" height="1" fill="#c98a00"/><rect x="2" y="3" width="1" height="1" fill="#ffd84a"/><rect x="3" y="3" width="1" height="1" fill="#ffffff"/><rect x="4" y="3" width="3" height="1" fill="#ffd84a"/><rect x="7" y="3" width="1" height="1" fill="#c98a00"/><rect x="2" y="4" width="1" height="1" fill="#ffd84a"/><rect x="3" y="4" width="1" height="1" fill="#ffffff"/><rect x="4" y="4" width="3" height="1" fill="#ffd84a"/><rect x="7" y="4" width="1" height="1" fill="#c98a00"/><rect x="1" y="5" width="7" height="1" fill="#ffd84a"/><rect x="8" y="5" width="1" height="1" fill="#c98a00"/><rect x="0" y="6" width="9" height="1" fill="#ffd84a"/><rect x="9" y="6" width="1" height="1" fill="#c98a00"/><rect x="0" y="7" width="10" height="1" fill="#c98a00"/><rect x="4" y="8" width="2" height="1" fill="#ff9a3d"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="1" height="1" fill="#1f9a57"/><rect x="7" y="0" width="1" height="1" fill="#46e08a"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="6" y="1" width="2" height="1" fill="#46e08a"/><rect x="3" y="2" width="4" height="1" fill="#e8f55a"/><rect x="2" y="3" width="1" height="1" fill="#e8f55a"/><rect x="3" y="3" width="2" height="1" fill="#ffffff"/><rect x="5" y="3" width="3" height="1" fill="#e8f55a"/><rect x="1" y="4" width="1" height="1" fill="#e8f55a"/><rect x="2" y="4" width="1" height="1" fill="#ffffff"/><rect x="3" y="4" width="6" height="1" fill="#e8f55a"/><rect x="0" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="5" width="8" height="1" fill="#e8f55a"/><rect x="9" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="6" width="7" height="1" fill="#e8f55a"/><rect x="8" y="6" width="1" height="1" fill="#9fb020"/><rect x="1" y="7" width="1" height="1" fill="#9fb020"/><rect x="2" y="7" width="5" height="1" fill="#e8f55a"/><rect x="7" y="7" width="2" height="1" fill="#9fb020"/><rect x="2" y="8" width="6" height="1" fill="#9fb020"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="1" height="1" fill="#1f9a57"/><rect x="7" y="0" width="1" height="1" fill="#46e08a"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="6" y="1" width="2" height="1" fill="#46e08a"/><rect x="3" y="2" width="4" height="1" fill="#e8f55a"/><rect x="2" y="3" width="1" height="1" fill="#e8f55a"/><rect x="3" y="3" width="2" height="1" fill="#ffffff"/><rect x="5" y="3" width="3" height="1" fill="#e8f55a"/><rect x="1" y="4" width="1" height="1" fill="#e8f55a"/><rect x="2" y="4" width="1" height="1" fill="#ffffff"/><rect x="3" y="4" width="6" height="1" fill="#e8f55a"/><rect x="0" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="5" width="8" height="1" fill="#e8f55a"/><rect x="9" y="5" width="1" height="1" fill="#9fb020"/><rect x="1" y="6" width="7" height="1" fill="#e8f55a"/><rect x="8" y="6" width="1" height="1" fill="#9fb020"/><rect x="1" y="7" width="1" height="1" fill="#9fb020"/><rect x="2" y="7" width="5" height="1" fill="#e8f55a"/><rect x="7" y="7" width="2" height="1" fill="#9fb020"/><rect x="2" y="8" width="6" height="1" fill="#9fb020"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#3fb6ff"/><rect x="4" y="1" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="2" width="1" height="1" fill="#3fb6ff"/><rect x="4" y="2" width="1" height="1" fill="#b8ecff"/><rect x="5" y="2" width="2" height="1" fill="#3fb6ff"/><rect x="0" y="3" width="4" height="1" fill="#3fb6ff"/><rect x="4" y="3" width="1" height="1" fill="#b8ecff"/><rect x="5" y="3" width="5" height="1" fill="#3fb6ff"/><rect x="1" y="4" width="8" height="1" fill="#3fb6ff"/><rect x="2" y="5" width="6" height="1" fill="#3fb6ff"/><rect x="2" y="6" width="6" height="1" fill="#3fb6ff"/><rect x="1" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="4" y="7" width="2" height="1" fill="#1d63c9"/><rect x="6" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="1" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="8" width="1" height="1" fill="#1d63c9"/><rect x="6" y="8" width="1" height="1" fill="#1d63c9"/><rect x="7" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="1" y="9" width="1" height="1" fill="#3fb6ff"/><rect x="2" y="9" width="1" height="1" fill="#1d63c9"/><rect x="7" y="9" width="1" height="1" fill="#1d63c9"/><rect x="8" y="9" width="1" height="1" fill="#3fb6ff"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#3fb6ff"/><rect x="4" y="1" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="2" width="1" height="1" fill="#3fb6ff"/><rect x="4" y="2" width="1" height="1" fill="#b8ecff"/><rect x="5" y="2" width="2" height="1" fill="#3fb6ff"/><rect x="0" y="3" width="4" height="1" fill="#3fb6ff"/><rect x="4" y="3" width="1" height="1" fill="#b8ecff"/><rect x="5" y="3" width="5" height="1" fill="#3fb6ff"/><rect x="1" y="4" width="8" height="1" fill="#3fb6ff"/><rect x="2" y="5" width="6" height="1" fill="#3fb6ff"/><rect x="2" y="6" width="6" height="1" fill="#3fb6ff"/><rect x="1" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="4" y="7" width="2" height="1" fill="#1d63c9"/><rect x="6" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="1" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="8" width="1" height="1" fill="#1d63c9"/><rect x="6" y="8" width="1" height="1" fill="#1d63c9"/><rect x="7" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="1" y="9" width="1" height="1" fill="#3fb6ff"/><rect x="2" y="9" width="1" height="1" fill="#1d63c9"/><rect x="7" y="9" width="1" height="1" fill="#1d63c9"/><rect x="8" y="9" width="1" height="1" fill="#3fb6ff"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="2" y="1" width="1" height="1" fill="#b25bff"/><rect x="3" y="1" width="4" height="1" fill="#e9c8ff"/><rect x="7" y="1" width="1" height="1" fill="#b25bff"/><rect x="1" y="2" width="1" height="1" fill="#b25bff"/><rect x="2" y="2" width="1" height="1" fill="#e9c8ff"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="2" height="1" fill="#e9c8ff"/><rect x="6" y="2" width="3" height="1" fill="#b25bff"/><rect x="0" y="3" width="1" height="1" fill="#b25bff"/><rect x="1" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="2" y="3" width="6" height="1" fill="#b25bff"/><rect x="8" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="9" y="3" width="1" height="1" fill="#b25bff"/><rect x="0" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="4" width="8" height="1" fill="#b25bff"/><rect x="9" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="5" width="6" height="1" fill="#b25bff"/><rect x="8" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="6" width="4" height="1" fill="#b25bff"/><rect x="7" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="7" width="2" height="1" fill="#b25bff"/><rect x="6" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="8" width="2" height="1" fill="#6c2bd9"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="1" y="0" width="8" height="1" fill="#ff4d6d"/><rect x="1" y="1" width="1" height="1" fill="#ff4d6d"/><rect x="2" y="1" width="1" height="1" fill="#ffffff"/><rect x="3" y="1" width="6" height="1" fill="#ff4d6d"/><rect x="9" y="1" width="1" height="1" fill="#b8203f"/><rect x="1" y="2" width="5" height="1" fill="#b8203f"/><rect x="6" y="2" width="2" height="1" fill="#ff4d6d"/><rect x="8" y="2" width="1" height="1" fill="#b8203f"/><rect x="5" y="3" width="2" height="1" fill="#ff4d6d"/><rect x="7" y="3" width="1" height="1" fill="#b8203f"/><rect x="4" y="4" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="4" width="1" height="1" fill="#b8203f"/><rect x="4" y="5" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="5" width="1" height="1" fill="#b8203f"/><rect x="3" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="6" width="1" height="1" fill="#b8203f"/><rect x="3" y="7" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="7" width="1" height="1" fill="#b8203f"/><rect x="2" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="4" y="8" width="1" height="1" fill="#b8203f"/><rect x="2" y="9" width="2" height="1" fill="#b8203f"/></svg></span></div></div><div class="ireel"><div class="istrip" style="--t:1.3s"><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#c98a00"/><rect x="3" y="1" width="4" height="1" fill="#ffd84a"/><rect x="2" y="2" width="1" height="1" fill="#ffd84a"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="3" height="1" fill="#ffd84a"/><rect x="7" y="2" width="1" height="1" fill="#c98a00"/><rect x="2" y="3" width="1" height="1" fill="#ffd84a"/><rect x="3" y="3" width="1" height="1" fill="#ffffff"/><rect x="4" y="3" width="3" height="1" fill="#ffd84a"/><rect x="7" y="3" width="1" height="1" fill="#c98a00"/><rect x="2" y="4" width="1" height="1" fill="#ffd84a"/><rect x="3" y="4" width="1" height="1" fill="#ffffff"/><rect x="4" y="4" width="3" height="1" fill="#ffd84a"/><rect x="7" y="4" width="1" height="1" fill="#c98a00"/><rect x="1" y="5" width="7" height="1" fill="#ffd84a"/><rect x="8" y="5" width="1" height="1" fill="#c98a00"/><rect x="0" y="6" width="9" height="1" fill="#ffd84a"/><rect x="9" y="6" width="1" height="1" fill="#c98a00"/><rect x="0" y="7" width="10" height="1" fill="#c98a00"/><rect x="4" y="8" width="2" height="1" fill="#ff9a3d"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="6" y="0" width="2" height="1" fill="#1f9a57"/><rect x="5" y="1" width="1" height="1" fill="#1f9a57"/><rect x="7" y="1" width="1" height="1" fill="#1f9a57"/><rect x="4" y="2" width="1" height="1" fill="#1f9a57"/><rect x="7" y="2" width="1" height="1" fill="#1f9a57"/><rect x="3" y="3" width="1" height="1" fill="#1f9a57"/><rect x="7" y="3" width="1" height="1" fill="#1f9a57"/><rect x="2" y="4" width="1" height="1" fill="#1f9a57"/><rect x="8" y="4" width="1" height="1" fill="#1f9a57"/><rect x="1" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="7" y="5" width="3" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="1" y="6" width="1" height="1" fill="#ffffff"/><rect x="2" y="6" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="6" width="1" height="1" fill="#ff4d6d"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/><rect x="8" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="0" y="7" width="4" height="1" fill="#ff4d6d"/><rect x="4" y="7" width="1" height="1" fill="#b8203f"/><rect x="6" y="7" width="3" height="1" fill="#ff4d6d"/><rect x="9" y="7" width="1" height="1" fill="#b8203f"/><rect x="0" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="3" y="8" width="2" height="1" fill="#b8203f"/><rect x="6" y="8" width="1" height="1" fill="#b8203f"/><rect x="7" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="9" y="8" width="1" height="1" fill="#b8203f"/><rect x="1" y="9" width="3" height="1" fill="#b8203f"/><rect x="7" y="9" width="2" height="1" fill="#b8203f"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="2" y="1" width="1" height="1" fill="#b25bff"/><rect x="3" y="1" width="4" height="1" fill="#e9c8ff"/><rect x="7" y="1" width="1" height="1" fill="#b25bff"/><rect x="1" y="2" width="1" height="1" fill="#b25bff"/><rect x="2" y="2" width="1" height="1" fill="#e9c8ff"/><rect x="3" y="2" width="1" height="1" fill="#ffffff"/><rect x="4" y="2" width="2" height="1" fill="#e9c8ff"/><rect x="6" y="2" width="3" height="1" fill="#b25bff"/><rect x="0" y="3" width="1" height="1" fill="#b25bff"/><rect x="1" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="2" y="3" width="6" height="1" fill="#b25bff"/><rect x="8" y="3" width="1" height="1" fill="#e9c8ff"/><rect x="9" y="3" width="1" height="1" fill="#b25bff"/><rect x="0" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="4" width="8" height="1" fill="#b25bff"/><rect x="9" y="4" width="1" height="1" fill="#6c2bd9"/><rect x="1" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="5" width="6" height="1" fill="#b25bff"/><rect x="8" y="5" width="1" height="1" fill="#6c2bd9"/><rect x="2" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="6" width="4" height="1" fill="#b25bff"/><rect x="7" y="6" width="1" height="1" fill="#6c2bd9"/><rect x="3" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="7" width="2" height="1" fill="#b25bff"/><rect x="6" y="7" width="1" height="1" fill="#6c2bd9"/><rect x="4" y="8" width="2" height="1" fill="#6c2bd9"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="4" y="0" width="2" height="1" fill="#3fb6ff"/><rect x="4" y="1" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="2" width="1" height="1" fill="#3fb6ff"/><rect x="4" y="2" width="1" height="1" fill="#b8ecff"/><rect x="5" y="2" width="2" height="1" fill="#3fb6ff"/><rect x="0" y="3" width="4" height="1" fill="#3fb6ff"/><rect x="4" y="3" width="1" height="1" fill="#b8ecff"/><rect x="5" y="3" width="5" height="1" fill="#3fb6ff"/><rect x="1" y="4" width="8" height="1" fill="#3fb6ff"/><rect x="2" y="5" width="6" height="1" fill="#3fb6ff"/><rect x="2" y="6" width="6" height="1" fill="#3fb6ff"/><rect x="1" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="4" y="7" width="2" height="1" fill="#1d63c9"/><rect x="6" y="7" width="3" height="1" fill="#3fb6ff"/><rect x="1" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="3" y="8" width="1" height="1" fill="#1d63c9"/><rect x="6" y="8" width="1" height="1" fill="#1d63c9"/><rect x="7" y="8" width="2" height="1" fill="#3fb6ff"/><rect x="1" y="9" width="1" height="1" fill="#3fb6ff"/><rect x="2" y="9" width="1" height="1" fill="#1d63c9"/><rect x="7" y="9" width="1" height="1" fill="#1d63c9"/><rect x="8" y="9" width="1" height="1" fill="#3fb6ff"/></svg></span><span><svg class="" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="1" y="0" width="8" height="1" fill="#ff4d6d"/><rect x="1" y="1" width="1" height="1" fill="#ff4d6d"/><rect x="2" y="1" width="1" height="1" fill="#ffffff"/><rect x="3" y="1" width="6" height="1" fill="#ff4d6d"/><rect x="9" y="1" width="1" height="1" fill="#b8203f"/><rect x="1" y="2" width="5" height="1" fill="#b8203f"/><rect x="6" y="2" width="2" height="1" fill="#ff4d6d"/><rect x="8" y="2" width="1" height="1" fill="#b8203f"/><rect x="5" y="3" width="2" height="1" fill="#ff4d6d"/><rect x="7" y="3" width="1" height="1" fill="#b8203f"/><rect x="4" y="4" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="4" width="1" height="1" fill="#b8203f"/><rect x="4" y="5" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="5" width="1" height="1" fill="#b8203f"/><rect x="3" y="6" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="6" width="1" height="1" fill="#b8203f"/><rect x="3" y="7" width="2" height="1" fill="#ff4d6d"/><rect x="5" y="7" width="1" height="1" fill="#b8203f"/><rect x="2" y="8" width="2" height="1" fill="#ff4d6d"/><rect x="4" y="8" width="1" height="1" fill="#b8203f"/><rect x="2" y="9" width="2" height="1" fill="#b8203f"/></svg></span></div></div></div>
+    </div>
+    <div class="intro-tag">DEMO — VIRTUAL CREDITS ONLY</div>
+    <div class="intro-sub">A casino simulation. No real money, ever.</div>
+  </div>
+  <div class="intro-flash" aria-hidden="true"></div>
+  <div class="intro-sparks" aria-hidden="true"><i style="--tx:357px;--ty:91px;--s:12px;--c:#ffc940;--r:155deg;--dl:0.12s"></i><i style="--tx:378px;--ty:71px;--s:6px;--c:#fff3c4;--r:285deg;--dl:0.10s"></i><i style="--tx:268px;--ty:144px;--s:10px;--c:#b25bff;--r:458deg;--dl:0.06s"></i><i style="--tx:171px;--ty:126px;--s:8px;--c:#3fb6ff;--r:211deg;--dl:0.09s"></i><i style="--tx:136px;--ty:208px;--s:6px;--c:#2bd48a;--r:391deg;--dl:0.05s"></i><i style="--tx:149px;--ty:309px;--s:6px;--c:#ffc940;--r:477deg;--dl:0.09s"></i><i style="--tx:79px;--ty:237px;--s:8px;--c:#fff3c4;--r:52deg;--dl:0.04s"></i><i style="--tx:29px;--ty:203px;--s:10px;--c:#b25bff;--r:37deg;--dl:0.10s"></i><i style="--tx:-64px;--ty:313px;--s:6px;--c:#3fb6ff;--r:328deg;--dl:0.10s"></i><i style="--tx:-49px;--ty:335px;--s:8px;--c:#2bd48a;--r:190deg;--dl:0.02s"></i><i style="--tx:-118px;--ty:206px;--s:6px;--c:#ffc940;--r:225deg;--dl:0.05s"></i><i style="--tx:-201px;--ty:288px;--s:8px;--c:#fff3c4;--r:380deg;--dl:0.01s"></i><i style="--tx:-192px;--ty:181px;--s:10px;--c:#b25bff;--r:104deg;--dl:0.03s"></i><i style="--tx:-302px;--ty:210px;--s:12px;--c:#3fb6ff;--r:157deg;--dl:0.05s"></i><i style="--tx:-184px;--ty:101px;--s:10px;--c:#2bd48a;--r:459deg;--dl:0.10s"></i><i style="--tx:-378px;--ty:53px;--s:6px;--c:#ffc940;--r:371deg;--dl:0.09s"></i><i style="--tx:-198px;--ty:15px;--s:10px;--c:#fff3c4;--r:505deg;--dl:0.02s"></i><i style="--tx:-206px;--ty:-30px;--s:8px;--c:#b25bff;--r:24deg;--dl:0.04s"></i><i style="--tx:-368px;--ty:-98px;--s:6px;--c:#3fb6ff;--r:159deg;--dl:0.09s"></i><i style="--tx:-212px;--ty:-119px;--s:10px;--c:#2bd48a;--r:424deg;--dl:0.02s"></i><i style="--tx:-239px;--ty:-219px;--s:10px;--c:#ffc940;--r:17deg;--dl:0.02s"></i><i style="--tx:-171px;--ty:-277px;--s:6px;--c:#fff3c4;--r:225deg;--dl:0.03s"></i><i style="--tx:-134px;--ty:-323px;--s:6px;--c:#b25bff;--r:141deg;--dl:0.03s"></i><i style="--tx:-38px;--ty:-209px;--s:8px;--c:#3fb6ff;--r:201deg;--dl:0.00s"></i><i style="--tx:-28px;--ty:-302px;--s:8px;--c:#2bd48a;--r:525deg;--dl:0.05s"></i><i style="--tx:-8px;--ty:-256px;--s:6px;--c:#ffc940;--r:466deg;--dl:0.10s"></i><i style="--tx:52px;--ty:-218px;--s:6px;--c:#fff3c4;--r:517deg;--dl:0.10s"></i><i style="--tx:93px;--ty:-251px;--s:10px;--c:#b25bff;--r:185deg;--dl:0.06s"></i><i style="--tx:161px;--ty:-220px;--s:12px;--c:#3fb6ff;--r:126deg;--dl:0.03s"></i><i style="--tx:281px;--ty:-244px;--s:6px;--c:#2bd48a;--r:362deg;--dl:0.06s"></i><i style="--tx:202px;--ty:-172px;--s:12px;--c:#ffc940;--r:186deg;--dl:0.02s"></i><i style="--tx:280px;--ty:-170px;--s:10px;--c:#fff3c4;--r:68deg;--dl:0.07s"></i><i style="--tx:193px;--ty:-18px;--s:12px;--c:#b25bff;--r:214deg;--dl:0.03s"></i><i style="--tx:287px;--ty:-18px;--s:10px;--c:#3fb6ff;--r:351deg;--dl:0.01s"></i></div>
+  <div class="intro-road" aria-hidden="true"></div>
+  <div class="intro-chicken" aria-hidden="true"><svg class="" viewBox="0 0 12 13" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="7" y="0" width="2" height="1" fill="#ff4d6d"/><rect x="6" y="1" width="3" height="1" fill="#ff4d6d"/><rect x="6" y="2" width="4" height="1" fill="#ffffff"/><rect x="6" y="3" width="2" height="1" fill="#ffffff"/><rect x="8" y="3" width="1" height="1" fill="#1a0e30"/><rect x="9" y="3" width="1" height="1" fill="#ffffff"/><rect x="10" y="3" width="1" height="1" fill="#ff9a3d"/><rect x="6" y="4" width="4" height="1" fill="#ffffff"/><rect x="10" y="4" width="2" height="1" fill="#ff9a3d"/><rect x="0" y="5" width="1" height="1" fill="#ffffff"/><rect x="6" y="5" width="3" height="1" fill="#ffffff"/><rect x="9" y="5" width="1" height="1" fill="#ff4d6d"/><rect x="0" y="6" width="2" height="1" fill="#ffffff"/><rect x="5" y="6" width="4" height="1" fill="#ffffff"/><rect x="0" y="7" width="10" height="1" fill="#ffffff"/><rect x="0" y="8" width="3" height="1" fill="#ffffff"/><rect x="6" y="8" width="4" height="1" fill="#ffffff"/><rect x="1" y="9" width="3" height="1" fill="#ffffff"/><rect x="6" y="9" width="4" height="1" fill="#ffffff"/><rect x="2" y="10" width="7" height="1" fill="#ffffff"/><rect x="4" y="11" width="1" height="1" fill="#ff9a3d"/><rect x="7" y="11" width="1" height="1" fill="#ff9a3d"/><rect x="3" y="12" width="2" height="1" fill="#ff9a3d"/><rect x="6" y="12" width="2" height="1" fill="#ff9a3d"/></svg></div>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('intro'), resolve;
+  window.lpIntroDone = new Promise(function (r) { resolve = r; });
+  if (!el || document.documentElement.classList.contains('no-intro')) { if (el) el.remove(); resolve(); return; }
+  try { sessionStorage.setItem('lp-intro', '1'); } catch (e) {}
+  document.documentElement.classList.add('intro-on');
+  function finish() {
+    if (!el) return;
+    var e = el; el = null; e.remove();
+    document.documentElement.classList.remove('intro-on');
+    var b = document.querySelector('.brand'); if (b) { b.classList.add('pop'); setTimeout(function () { b.classList.remove('pop'); }, 700); }
+    resolve();
+  }
+  function skip() { if (!el || el.classList.contains('skip')) return; el.classList.add('skip'); setTimeout(finish, 300); }
+  el.addEventListener('animationend', function (ev) { if (ev.target === el && ev.animationName === 'introOut') finish(); });
+  el.addEventListener('click', skip);
+  document.addEventListener('keydown', function k(ev) {
+    if (!el) { document.removeEventListener('keydown', k); return; }
+    if (ev.key === 'Escape' || ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); skip(); }
+  });
+  setTimeout(finish, 6000);
+})();
+</script>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-card">
+    <div class="gate-brand"><i data-sprite="clover" class="px"></i><b>Lucky<i>Pixel</i></b></div>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <h1 id="gate-title">Create your account to play</h1>
+    <p class="gate-lead">A free casino simulation. New accounts get 10 virtual credits, which have no cash value and can’t be bought, withdrawn, or exchanged.</p>
+    <p class="small muted gate-loading">Checking your session…</p>
+    <div class="gate-offline" hidden>
+      <p id="gate-offline-text"></p>
+      <button class="btn btn-gold btn-block" type="button" id="gate-retry">Try again</button>
+    </div>
+    <div class="gate-tabs" role="tablist" aria-label="Account">
+      <button type="button" role="tab" data-tab="register" aria-selected="true">Create account</button>
+      <button type="button" role="tab" data-tab="login" aria-selected="false">Log in</button>
+    </div>
+    <form id="gate-register" novalidate>
+      <div class="field"><label for="g-email">Email</label><input id="g-email" type="email" autocomplete="email" maxlength="254" required></div>
+      <div class="field"><label for="g-user">Username</label><input id="g-user" autocomplete="username" maxlength="16" spellcheck="false" required><span class="small muted">3 to 16 letters, numbers, dashes, or underscores. Other players see it.</span></div>
+      <div class="field"><label for="g-pw">Password</label><input id="g-pw" type="password" autocomplete="new-password" minlength="8" required><span class="small muted">At least 8 characters.</span></div>
+      <div class="field"><label for="g-pw2">Confirm password</label><input id="g-pw2" type="password" autocomplete="new-password" minlength="8" required></div>
+      <label class="check"><input type="checkbox" id="g-agree"><span>I understand virtual credits have no cash value and can’t be exchanged for anything.</span></label>
+      <p class="form-err" id="g-reg-err" role="alert"></p>
+      <button class="btn btn-gold btn-block" id="g-reg-btn" type="submit">Create account and play</button>
+      <p class="small muted">Admins of this site can see your email, username, and game results.</p>
+    </form>
+    <form id="gate-login" hidden novalidate>
+      <div class="field"><label for="g-login">Email or username</label><input id="g-login" autocomplete="username" spellcheck="false" required></div>
+      <div class="field"><label for="g-login-pw">Password</label><input id="g-login-pw" type="password" autocomplete="current-password" required></div>
+      <p class="form-err" id="g-login-err" role="alert"></p>
+      <button class="btn btn-gold btn-block" id="g-login-btn" type="submit">Log in and play</button>
+      <p class="small muted">Forgot your password? Ask the site’s admin to reset it.</p>
+    </form>
+  </div>
+</div>
+<div class="topbar">
+  <div class="demo-strip" role="note">
+    <div class="wrap">
+      <i data-sprite="coin" class="px"></i>
+      <strong>DEMO — VIRTUAL CREDITS ONLY</strong>
+      <span class="long">No real money, purchases, prizes, or withdrawals. Credits have no cash value.</span>
+      <span class="short">No real money.</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="header">
+      <button class="brand" data-go="lobby" aria-label="LuckyPixel Casino lobby">
+        <i data-sprite="clover" class="px"></i>
+        <span><b>Lucky<i>Pixel</i></b><small>Casino simulation</small></span>
+      </button>
+      <div class="wallet" title="Virtual credits have no cash value">
+        <i data-sprite="coin" class="px"></i>
+        <span class="amt" id="balance">10</span>
+        <span class="unit">virtual<br>credits</span>
+      </div>
+      <button class="gift sound-btn" id="sound-btn" aria-pressed="true" aria-label="Sound on"></button>
+      <button class="gift" id="gift" aria-label="Claim daily bonus">
+        <i data-sprite="gift" class="px"></i><span class="dot" id="gift-dot" hidden></span>
+      </button>
+      <button class="acct" id="acct-btn" aria-label="Log in or create an account">
+        <span class="acct-av"></span><span class="acct-label">Log in</span>
+      </button>
+    </div>
+    <nav class="nav" aria-label="Sections">
+      <button data-go="lobby">Lobby</button>
+      <button data-go="slots">Pixel Reels</button>
+      <button data-go="crossing">Pixel Crossing</button>
+      <button data-go="cases">Cases <span class="nav-badge" id="cases-badge" hidden></span></button>
+      <button data-go="plinko">Plinko</button>
+      <button data-go="roulette">Roulette</button>
+      <button data-go="blackjack">Blackjack</button>
+      <button data-go="coin">Coin flip</button>
+      <button data-go="leaderboard">Leaderboard</button>
+      <button data-go="stats">My stats</button>
+      <button data-go="profile">Profile</button>
+      <button data-go="friends">Friends <span class="nav-badge" id="friends-badge" hidden></span></button>
+      <button data-go="responsible">Play responsibly</button>
+      <button data-go="admin" id="nav-admin" hidden>Admin</button>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ================= LOBBY ================= -->
+<section class="view" id="view-lobby" aria-labelledby="lobby-h">
+  <div class="hero">
+    <div>
+      <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+      <h1 id="lobby-h">Every chip here is make-believe.</h1>
+      <p>LuckyPixel is a casino simulation built for fun and interface design. You start with 10 free virtual credits. Nothing can be bought, cashed out, or won in the real world.</p>
+      <div class="cta">
+        <button class="btn btn-gold btn-big" data-go="slots">Play Pixel Reels</button>
+        <button class="btn btn-ghost" data-go="responsible">How virtual credits work</button>
+      </div>
+    </div>
+    <div class="marquee">
+      <div class="marquee-inner">
+        <div class="marquee-title">Pixel Jackpot</div>
+        <div class="led"><span class="jp-val">250</span><small>VC</small></div>
+        <p class="marquee-note">A fictional progressive jackpot. Line up three sevens on Pixel Reels with a bet of 1 VC or more to win it.</p>
+        <div class="marquee-reels" aria-hidden="true"><span><i data-sprite="seven"></i></span><span><i data-sprite="seven"></i></span><span><i data-sprite="seven"></i></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Games</h2><span class="muted small">Every game runs on virtual credits with no cash value.</span></div>
+  <div class="tiles">
+    <button class="tile" data-go="slots">
+      <span class="tile-art"><span class="mini-reels"><i><i data-sprite="cherry"></i></i><i><i data-sprite="seven"></i></i><i><i data-sprite="diamond"></i></i></span></span>
+      <span class="tile-body"><b>Pixel Reels</b><span>Three reels, one payline, and a fictional progressive jackpot.</span><em>Theoretical return about 94%</em></span>
+    </button>
+    <button class="tile" data-go="crossing">
+      <span class="tile-art"><span class="mini-road"><i data-sprite="chicken" class="mr-chicken"></i><span class="mr-tile">1.52×</span><i data-sprite="car-blue" class="mr-car"></i></span></span>
+      <span class="tile-body"><b>Pixel Crossing</b><span>Cross lane by lane as the multiplier climbs. Cash out before a hit.</span><em>Theoretical return about 97%</em></span>
+    </button>
+    <button class="tile" data-go="cases">
+      <span class="tile-art"><span class="mini-chests"><i data-sprite="chest-neon"></i><i data-sprite="chest-jackpot"></i><i data-sprite="chest-vault"></i></span></span>
+      <span class="tile-body"><b>Cases</b><span>Open item cases, or battle a friend where the best haul takes it all.</span><em>Returns about 92%</em></span>
+    </button>
+    <button class="tile" data-go="plinko">
+      <span class="tile-art"><span class="tile-badge">New</span><span class="mini-plinko" id="mini-plinko"></span></span>
+      <span class="tile-body"><b>Plinko</b><span>Drop balls through the pegs. The rare edge slots pay the most.</span><em>Returns about 96.5%</em></span>
+    </button>
+    <button class="tile" data-go="roulette">
+      <span class="tile-art"><span class="mini-wheel" id="mini-wheel"></span></span>
+      <span class="tile-body"><b>Roulette</b><span>European single-zero wheel with inside and outside bets.</span><em>House edge 2.7%</em></span>
+    </button>
+    <button class="tile" data-go="blackjack">
+      <span class="tile-art"><span class="mini-cards" id="mini-cards"></span></span>
+      <span class="tile-body"><b>Blackjack</b><span>Six-deck shoe. Beat the dealer to 21 without going over.</span><em>Blackjack pays 3 to 2</em></span>
+    </button>
+    <button class="tile" data-go="coin">
+      <span class="tile-art"><span class="mini-coin"><i data-sprite="clover"></i></span></span>
+      <span class="tile-body"><b>Coin flip</b><span>Call heads or tails and watch it land.</span><em>Pays 1.96× your bet</em></span>
+    </button>
+  </div>
+
+  <div class="lobby-grid">
+    <div class="panel bonus-panel">
+      <h2>Daily bonus</h2>
+      <div class="bonus-amt">+2 VC</div>
+      <p class="muted small">Free virtual credits once every 24 hours. They're pretend, just like the rest.</p>
+      <button class="btn btn-gold btn-block" data-bonus>Claim 2 VC</button>
+    </div>
+    <div class="panel">
+      <h2>Top players</h2>
+      <ol class="mini-board" id="mini-board"></ol>
+      <button class="btn btn-ghost btn-block" data-go="leaderboard" style="margin-top:12px">See the full leaderboard</button>
+    </div>
+    <div class="panel feed-panel">
+      <h2>Table talk</h2>
+      <p class="muted small">Simulated activity from fictional players, wins and losses alike.</p>
+      <ul class="feed" id="feed" aria-live="off"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLOTS ================= -->
+<section class="view" id="view-slots" aria-labelledby="slots-h">
+  <div class="game-head">
+    <h1 id="slots-h">Pixel Reels</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Match symbols on the gold payline. Three sevens with a bet of 1 VC or more wins the fictional Pixel Jackpot.</p>
+  </div>
+  <div class="game">
+    <div class="cabinet stage">
+      <div class="cab-top">
+        <span class="jp-label">Pixel Jackpot</span>
+        <span class="jp"><span class="jp-val">250</span> VC</span>
+      </div>
+      <div class="reels" id="reels">
+        <div class="reel"><div class="track"></div></div>
+        <div class="reel"><div class="track"></div></div>
+        <div class="reel"><div class="track"></div></div>
+        <div class="payline" id="payline"></div>
+      </div>
+      <div class="cab-bottom">
+        <div class="result" id="slot-result" aria-live="polite">Set your bet and spin.</div>
+      </div>
+    </div>
+    <div class="rail">
+      <div class="panel">
+        <div class="bp" id="bp-slots" data-unit="spin"></div>
+        <button class="btn btn-gold btn-big btn-block" id="slot-spin" style="margin-top:14px">Spin</button>
+        <p class="small muted" style="margin:12px 0 0">Balance: <span class="vc" data-bal>10</span> VC</p>
+      </div>
+      <div class="panel">
+        <h2>Paytable</h2>
+        <ul class="paytable" id="paytable"></ul>
+        <p class="small muted" style="margin-top:10px">Wins are multiples of your bet. Each spin adds 2% of the bet to the fictional jackpot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIXEL CROSSING ================= -->
+<section class="view" id="view-crossing" aria-labelledby="cross-h">
+  <div class="game-head">
+    <h1 id="cross-h">Pixel Crossing</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Guide the chicken across one lane at a time. Every safe lane raises the multiplier, and any step can end in a hit. Cash out whenever you like.</p>
+  </div>
+  <div class="match-banner" id="cx-match" hidden>
+    <span id="cx-match-text"></span>
+    <button class="btn btn-ghost btn-sm" id="cx-leave">Leave match</button>
+  </div>
+  <div class="cross-stage stage">
+    <div class="cross-bar" aria-live="off">
+      <span>Lane<b id="cx-lane">0 of 16</b></span>
+      <span>Next lane<b id="cx-next">1.12×</b></span>
+      <span>Hit chance per lane<b id="cx-risk">14%</b></span>
+    </div>
+    <div class="road" id="road" role="img" aria-label="Road with lanes, traffic, and the chicken"><div class="road-track" id="road-track"></div></div>
+  </div>
+  <div class="cross-controls">
+    <div class="panel">
+      <h2>Bet and difficulty</h2>
+      <div class="bp" id="bp-cross" data-unit="crossing"></div>
+      <div class="seg seg4" id="cx-diff" role="group" aria-label="Difficulty" style="margin-top:14px"></div>
+    </div>
+    <div class="panel cross-action">
+      <div class="cross-meter">
+        <div><span>Multiplier</span><b id="cx-mult">1.00×</b></div>
+        <div><span id="cx-value-label">Cash-out value</span><b id="cx-value">1</b></div>
+      </div>
+      <div class="cross-btns">
+        <button class="btn btn-gold btn-big" id="cx-go">Go</button>
+        <button class="btn btn-violet btn-big" id="cx-cash">Cash out</button>
+      </div>
+      <div class="result" id="cx-result" aria-live="polite" style="margin-top:12px">Pick a bet and a difficulty, then press Go.</div>
+      <p class="small muted" style="margin:10px 0 0">Balance: <span class="vc" data-bal>10</span> VC</p>
+    </div>
+    <div class="panel">
+      <h2>How it works</h2>
+      <ul class="rules">
+        <li>Each press of Go moves one lane. Your bet is placed on the first step.</li>
+        <li>Every lane has the same chance of a hit, set by the difficulty.</li>
+        <li>Cash out after any safe step, or reach the far side for the top multiplier.</li>
+        <li>Multipliers are set for about a 97% theoretical return wherever you stop.</li>
+      </ul>
+      <p class="small muted" style="margin-top:10px">Feeling one lane away from a big win? The next step is exactly as risky as the last one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASES ================= -->
+<section class="view" id="view-cases" aria-labelledby="cases-h">
+  <div class="game-head">
+    <h1 id="cases-h">Cases</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Open a case to win a random pixel item. Its value goes straight into your balance. Cases return about 92% of their price on average, and every item’s chance is listed.</p>
+  </div>
+  <div class="case-grid" id="case-grid" role="group" aria-label="Choose a case"></div>
+  <div class="panel case-open stage">
+    <div class="case-open-head"><h2 id="co-title">Case</h2><span class="small muted" id="co-sub"></span></div>
+    <div class="roller" id="co-roller"><div class="roller-track"></div><div class="roller-mark"></div></div>
+    <div class="case-actions">
+      <button class="btn btn-gold btn-big" id="co-open">Open</button>
+      <div class="result" id="co-result" aria-live="polite">Pick a case and open it.</div>
+    </div>
+    <div class="drops"><span class="small muted">Recent drops</span><div class="drops-row" id="co-drops"></div></div>
+  </div>
+  <div class="two-col">
+    <div class="panel"><h2>What’s inside</h2><div class="items-grid" id="co-items"></div></div>
+    <div class="panel">
+      <div class="bt-head-row"><h2 style="margin:0">Case battles</h2><button class="btn btn-sm btn-violet" id="bt-new">Create a battle</button></div>
+      <p class="small muted">Invite a friend. You both open the same cases, and whoever opens the highest total value takes every item from both sides.</p>
+      <div class="mlist" id="bt-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLINKO ================= -->
+<section class="view" id="view-plinko" aria-labelledby="plinko-h">
+  <div class="game-head">
+    <h1 id="plinko-h">Plinko</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Drop a ball and watch it bounce down the pegs. Every peg sends it left or right with even odds, and the slot it lands in sets your multiplier. You can have several balls in the air at once.</p>
+  </div>
+  <div class="game">
+    <div class="pl-stage stage">
+      <div class="pl-board"><canvas id="pl-canvas" role="img" aria-label="Plinko board with pegs and multiplier slots"></canvas></div>
+      <div class="pl-hist" id="pl-hist" aria-label="Your last drops"></div>
+      <button class="btn btn-gold btn-big btn-block pl-drop-near" id="pl-drop-near">Drop ball</button>
+    </div>
+    <div class="rail">
+      <div class="panel">
+        <div class="bp" id="bp-plinko" data-unit="ball"></div>
+        <span class="small muted" style="display:block;margin-top:14px">Risk</span>
+        <div class="seg seg3" id="pl-risk" role="group" aria-label="Risk" style="margin-top:6px"></div>
+        <span class="small muted" style="display:block;margin-top:12px">Rows</span>
+        <div class="seg seg3" id="pl-rows" role="group" aria-label="Rows" style="margin-top:6px"></div>
+        <button class="btn btn-gold btn-big btn-block" id="pl-drop" style="margin-top:14px">Drop ball</button>
+        <p class="small muted" id="pl-inplay" style="margin:10px 0 0;text-align:center"></p>
+        <div class="result" id="pl-result" aria-live="polite" style="margin-top:10px">Pick your risk and rows, then drop a ball.</div>
+      </div>
+      <div class="panel">
+        <h2>How it works</h2>
+        <dl class="kv"><dt>Return at this setting</dt><dd id="pl-rtp"></dd><dt>Edge slot</dt><dd id="pl-edge"></dd></dl>
+        <p class="small muted" style="margin-top:10px">Middle slots are the most likely and usually pay back less than your bet. Higher risk makes the middle smaller and the edges bigger. Risk and rows lock while balls are in play.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROULETTE ================= -->
+<section class="view" id="view-roulette" aria-labelledby="roulette-h">
+  <div class="game-head">
+    <h1 id="roulette-h">Roulette</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>European single-zero wheel. Pick a chip, tap the table to place bets, then spin.</p>
+  </div>
+  <div class="rgame">
+    <div class="roulette-stage stage">
+      <div class="wheel-wrap" id="wheel-wrap">
+        <div id="wheel-base"></div>
+        <div class="wheel-rot" id="wheel-rot"></div>
+        <div class="orbit" id="orbit"><div class="ball" id="ball"></div></div>
+        <div class="pointer" aria-hidden="true"></div>
+        <div class="wheel-result" id="wheel-result" aria-hidden="true"></div>
+      </div>
+      <div class="rhist" id="rhist" aria-label="Recent winning numbers"></div>
+      <div class="result" id="r-result" aria-live="polite">Place your bets.</div>
+    </div>
+    <div class="rside">
+      <div class="panel board-panel">
+        <div class="board-scroll"><div class="board" id="board" role="group" aria-label="Betting table"></div></div>
+      </div>
+      <div class="panel rcontrols">
+        <div class="chips" id="rchips" role="group" aria-label="Chip value"></div>
+        <div class="row2">
+          <div class="bet-summary" style="gap:10px"><span>Total bet</span><b id="rtotal">0</b></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="r-undo">Undo</button>
+            <button class="btn btn-ghost" id="r-clear">Clear</button>
+            <button class="btn btn-ghost" id="r-rebet">Rebet</button>
+          </div>
+          <button class="btn btn-gold btn-big" id="r-spin">Spin</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Payouts</h2>
+        <ul class="rules">
+          <li>A single number pays 35 to 1.</li>
+          <li>A dozen or a column (2:1) pays 2 to 1.</li>
+          <li>Red, black, odd, even, 1–18, and 19–36 pay 1 to 1.</li>
+          <li>Zero loses every outside bet. House edge is 2.7%.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BLACKJACK ================= -->
+<section class="view" id="view-blackjack" aria-labelledby="bj-h">
+  <div class="game-head">
+    <h1 id="bj-h">Blackjack</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Get closer to 21 than the dealer without going over. Build a bet with chips, then deal.</p>
+  </div>
+  <div class="game">
+    <div class="felt stage" id="felt">
+      
+      <div class="shoe" aria-hidden="true"><span id="shoe-count">312</span></div>
+      <div class="hand-area">
+        <div class="hand-label">Dealer <span class="total" id="d-total" hidden></span></div>
+        <div class="hand" id="d-hand"></div>
+      </div>
+      <div class="felt-mid">
+        <svg class="felt-arc" viewBox="0 0 600 110" aria-hidden="true">
+          <defs>
+            <path id="arc1" d="M30 16 Q300 112 570 16"/>
+            <path id="arc2" d="M150 58 Q300 112 450 58"/>
+          </defs>
+          <text font-size="20" fill="#ffc940" text-anchor="middle"><textPath href="#arc1" startOffset="50%">BLACKJACK PAYS 3 TO 2</textPath></text>
+          <text font-size="12.5" fill="rgba(239,232,255,.72)" text-anchor="middle"><textPath href="#arc2" startOffset="50%">Dealer stands on all 17s</textPath></text>
+        </svg>
+        <div class="bj-msg" id="bj-msg" aria-live="polite"></div>
+      </div>
+      <div class="hand-area">
+        <div class="hand" id="p-hand"></div>
+        <div class="hand-label">You <span class="total" id="p-total" hidden></span></div>
+      </div>
+      <div class="bet-spot" id="bet-spot"><div><b id="bj-bet-val">1</b><small>VC bet</small></div></div>
+    </div>
+    <div class="rail">
+      <div class="panel">
+        <h2>Your bet</h2>
+        <div class="chips" id="bjchips" role="group" aria-label="Add chips to your bet"></div>
+        <div class="btn-row" style="grid-template-columns:1fr 1fr;margin-top:14px">
+          <button class="btn btn-ghost" id="bj-clear">Clear bet</button>
+          <button class="btn btn-ghost" id="bj-min">Minimum bet</button>
+        </div>
+        <button class="btn btn-gold btn-big btn-block" id="bj-deal" style="margin-top:12px">Deal</button>
+      </div>
+      <div class="panel" id="bj-move">
+        <h2>Your move</h2>
+        <div class="bj-actions">
+          <button class="btn btn-blue" id="bj-hit">Hit</button>
+          <button class="btn btn-violet" id="bj-stand">Stand</button>
+          <button class="btn btn-ghost" id="bj-double">Double</button>
+        </div>
+        <p class="small muted" style="margin-top:10px">Balance: <span class="vc" data-bal>10</span> VC</p>
+      </div>
+      <div class="panel">
+        <h2>Table rules</h2>
+        <ul class="rules">
+          <li>Six decks, reshuffled when the shoe runs low.</li>
+          <li>Dealer stands on all 17s and peeks for blackjack.</li>
+          <li>Double down on your first two cards.</li>
+          <li>Splits and insurance aren't offered in this demo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COIN FLIP ================= -->
+<section class="view" id="view-coin" aria-labelledby="coin-h">
+  <div class="game-head">
+    <h1 id="coin-h">Coin flip</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Call heads or tails. A correct call pays 1.96× your bet, which gives the house a 2% edge.</p>
+  </div>
+  <div class="game">
+    <div class="coin-stage stage">
+      <div class="coin-callout" id="coin-callout">Heads or tails?</div>
+      <div class="coin-jump" id="coin-jump">
+        <div class="coin" id="coin">
+          <div class="side heads"><i data-sprite="clover"></i><b>Heads</b></div>
+          <div class="side tails"><i data-sprite="star"></i><b>Tails</b></div>
+        </div>
+      </div>
+      <div class="coin-shadow"></div>
+    </div>
+    <div class="rail">
+      <div class="panel">
+        <h2>Your call</h2>
+        <div class="seg" role="group" aria-label="Pick a side">
+          <button data-pick="heads" aria-pressed="true"><i></i>Heads</button>
+          <button data-pick="tails" aria-pressed="false"><i></i>Tails</button>
+        </div>
+        <div class="bp" id="bp-coin" data-unit="flip" style="margin-top:16px"></div>
+        <button class="btn btn-gold btn-big btn-block" id="coin-flip" style="margin-top:14px">Flip</button>
+        <div class="result" id="coin-result" aria-live="polite" style="margin-top:12px">Pick a side and flip.</div>
+      </div>
+      <div class="panel">
+        <h2>This session</h2>
+        <dl class="kv">
+          <dt>Current streak</dt><dd id="coin-streak">None yet</dd>
+          <dt>Heads and tails seen</dt><dd id="coin-ht">0 and 0</dd>
+        </dl>
+        <div class="chist" id="chist" style="margin-top:12px" aria-label="Last 24 flips"></div>
+        <p class="small muted" style="margin-top:10px">Every flip is independent. A streak doesn't make the next result more or less likely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEADERBOARD ================= -->
+<section class="view" id="view-leaderboard" aria-labelledby="lb-h">
+  <div class="game-head">
+    <h1 id="lb-h">Leaderboard</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Ranked by current virtual-credit balance. Every other player here is fictional, and their scores are simulated.</p>
+  </div>
+  <div class="lb-wrap">
+    <div class="lb" role="table" aria-label="Leaderboard">
+      <div class="lb-head" role="row"><span>Rank</span><span>Player</span><span class="fav">Favorite game</span><span style="text-align:right">Virtual credits</span></div>
+      <div id="lb-rows"></div>
+    </div>
+    <div class="rail">
+      <div class="panel">
+        <h2>Your name on the board</h2>
+        <div class="field">
+          <label for="name-input">Display name, kept in this browser only</label>
+          <input id="name-input" maxlength="16" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="small muted" style="margin-top:12px">Your rank right now: <b id="your-rank" style="color:var(--gold)">–</b></p>
+      </div>
+      <div class="panel">
+        <h2>About these scores</h2>
+        <p class="small muted">The other names are invented, and their balances shift on a timer so the board feels alive. Ranking earns no prizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="view" id="view-stats" aria-labelledby="stats-h">
+  <div class="game-head">
+    <h1 id="stats-h">My stats</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p data-alt="Everything here is measured in virtual credits and stored only in this browser.">Everything here is measured in virtual credits and saved to your account.</p>
+  </div>
+  <div class="stat-grid" id="stat-grid"></div>
+  <div class="panel chart-panel">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+      <h2 style="margin:0">Balance over time</h2>
+      <div class="chart-legend"><span><i style="background:var(--gold)"></i>Your balance</span><span><i style="background:var(--ink-faint)"></i>Starting balance of 10</span></div>
+    </div>
+    <svg class="chart" id="chart" viewBox="0 0 600 220" preserveAspectRatio="none" role="img" aria-label="Line chart of your virtual-credit balance"></svg>
+    <p class="small muted" id="chart-empty" style="margin:6px 0 0">Play a few rounds and your balance history will show up here.</p>
+  </div>
+  <div class="two-col">
+    <div class="panel">
+      <h2>By game</h2>
+      <div class="table-scroll"><table class="gtable" id="gtable"></table></div>
+    </div>
+    <div class="panel">
+      <h2>Start over</h2>
+      <p class="muted small">Restarting puts your balance back to 10 virtual credits and keeps your stats. Resetting everything also clears your stats, history, and jackpot.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button class="btn btn-violet" id="restart-bal">Restart balance</button>
+        <button class="btn btn-ghost" id="reset-all">Reset everything</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESPONSIBLE PLAY ================= -->
+<section class="view" id="view-responsible" aria-labelledby="rp-h">
+  <div class="game-head">
+    <h1 id="rp-h">Play responsibly</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+  </div>
+  <div class="resp-grid">
+    <div class="prose">
+      <p style="font-size:18px;color:var(--ink)">LuckyPixel Casino is a fictional simulation made for entertainment and interface design. It looks like a casino so it can be enjoyed and studied like one, but it's built so that nothing real is ever at stake.</p>
+      <h2>What virtual credits are</h2>
+      <p>Virtual credits (VC) are <span data-alt="numbers stored in your browser">numbers stored in your player account on this site</span>. They have <strong>no monetary value</strong>. You can't buy them, sell them, withdraw them, trade them, or exchange them for prizes, gift cards, cryptocurrency, or anything else. If you clear your browser data, they disappear, and nothing is lost.</p>
+      <h2>What this site will never do</h2>
+      <ul class="checks">
+        <li>Ask for a deposit, payment, card number, or bank details</li>
+        <li>Offer withdrawals, cash-outs, gift cards, or prize redemption</li>
+        <li>Sell credits, boosts, or extra spins</li>
+        <li>Accept or pay out cryptocurrency</li>
+        <li>Ask for payment details, or share your play data outside this site</li>
+      </ul>
+      <h2>The house edge is real, even here</h2>
+      <p>The games use realistic odds, so they behave like the real thing: the longer you play, the more your balance tends to drift down. Roulette keeps 2.7% of every bet on average, Pixel Reels about 6% before the jackpot, Pixel Crossing about 3%, Plinko about 3.5%, cases about 8%, and coin flip 2%. In a real casino that drift is paid in real money. Watching it happen with pretend credits is one of the most useful things a simulation can show.</p>
+      <h2>If gambling is affecting you</h2>
+      <p>If real-money gambling is causing problems for you or someone you know, talking to someone helps. Support is free and confidential in many places, and you don't need to be in crisis to reach out.</p>
+    </div>
+    <div class="rail">
+      <div class="panel help-card">
+        <h2>Where to find support</h2>
+        <p class="small">In the US, call 1-800-GAMBLER, the National Council on Problem Gambling helpline.</p>
+        <p class="small">In the UK, the National Gambling Helpline is 0808 8020 133, run by GamCare.</p>
+        <p class="small">Elsewhere, Gamblers Anonymous holds meetings worldwide, and a doctor can point you to local services.</p>
+      </div>
+      <div class="panel">
+        <h2>Reality check</h2>
+        <p class="small muted">Get a reminder of how long you've been playing and how your session is going.</p>
+        <div class="field" style="margin-top:10px">
+          <label for="reality">Remind me every</label>
+          <select id="reality">
+            <option value="0">Never</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= PROFILE ================= -->
+<section class="view" id="view-profile" aria-labelledby="profile-h">
+  <div class="game-head">
+    <h1 id="profile-h">Profile</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Your photo, bio, tags, and friend code are visible to other players on this site.</p>
+  </div>
+  <div id="profile-body"></div>
+</section>
+
+<!-- ================= FRIENDS ================= -->
+<section class="view" id="view-friends" aria-labelledby="friends-h">
+  <div class="game-head">
+    <h1 id="friends-h">Friends and matches</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Add friends with their friend code, then challenge them to a Pixel Crossing match. Matches are just for fun, so no credits are at stake.</p>
+  </div>
+  <div id="friends-body"></div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section class="view" id="view-admin" aria-labelledby="admin-h">
+  <div class="game-head">
+    <h1 id="admin-h">Admin</h1>
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <p>Live results for registered players. Every amount is in virtual credits, which have no cash value.</p>
+  </div>
+  <div id="admin-body"></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p><strong style="color:var(--ink)">LuckyPixel Casino is fictional.</strong> This is a free simulation for entertainment and UI design. It uses virtual credits only: no real money, deposits, withdrawals, purchases, prizes, or cryptocurrency. Credits have no cash value and can't be exchanged for anything.</p>
+      <p data-alt="Your balance and stats are saved in this browser only. Clearing your browser data resets them.">Your balance, stats, and profile are saved to your account on this site. Admins can see account emails and game results, and other players can see profiles.</p>
+    </div>
+    <nav aria-label="Footer">
+      <button data-go="responsible">Play responsibly</button>
+      <button data-go="stats">My stats</button>
+      <button data-go="leaderboard">Leaderboard</button>
+      <button data-go="lobby">Lobby</button>
+    </nav>
+  </div>
+</footer>
+
+<!-- Dialogs -->
+<dialog id="dlg-welcome" aria-labelledby="w-title">
+  <div class="dlg">
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <h2 id="w-title">Welcome to LuckyPixel</h2>
+    <p>This is a fictional casino made for fun and interface design. Before you play:</p>
+    <ul>
+      <li>You get 10 free virtual credits to start.</li>
+      <li>Credits have no cash value and can't be bought, withdrawn, or exchanged.</li>
+      <li>There are no deposits, prizes, or payments anywhere on this site.</li>
+      <li>The games use realistic odds, so the house still has an edge.</li>
+    </ul>
+    <div class="actions"><button class="btn btn-gold" data-close>Got it, start playing</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-reality" aria-labelledby="rc-title">
+  <div class="dlg">
+    <span class="demo-tag">REALITY CHECK</span>
+    <h2 id="rc-title">Time for a quick check-in</h2>
+    <p id="rc-text"></p>
+    <p class="small">These are virtual credits. In real gambling, this would be your money and your time.</p>
+    <div class="actions">
+      <button class="btn btn-ghost" data-close data-go="stats">View my stats</button>
+      <button class="btn btn-gold" data-close>Keep playing</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-broke" aria-labelledby="b-title">
+  <div class="dlg">
+    <span class="demo-tag">DEMO — VIRTUAL CREDITS ONLY</span>
+    <h2 id="b-title">You're out of virtual credits</h2>
+    <p>That's the house edge doing what it does. In real gambling this is the moment people chase losses. Here, nothing real was lost.</p>
+    <p>Take a break, claim your daily bonus when it's ready, or restart the demo balance.</p>
+    <div class="actions">
+      <button class="btn btn-gold" id="broke-bonus" data-bonus>Claim 2 VC</button>
+      <button class="btn btn-violet" id="broke-restart">Restart at 10 VC</button>
+      <button class="btn btn-ghost" data-close>Take a break</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-confirm" aria-labelledby="cf-title">
+  <div class="dlg">
+    <h2 id="cf-title"></h2>
+    <p id="cf-text"></p>
+    <div class="actions">
+      <button class="btn btn-ghost" data-close>Cancel</button>
+      <button class="btn btn-violet" id="cf-ok"></button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-account" aria-labelledby="acct-title">
+  <div class="dlg" id="acct-body"></div>
+</dialog>
+
+<dialog id="dlg-profile" aria-labelledby="pv-title">
+  <div class="dlg" id="pv-body"></div>
+</dialog>
+
+<dialog id="dlg-challenge" aria-labelledby="ch-title">
+  <div class="dlg">
+    <span class="demo-tag">FRIEND MATCH</span>
+    <h2 id="ch-title">Challenge</h2>
+    <p>You’ll each play the same number of Pixel Crossing rounds. A round scores the multiplier you cash out at, or 0 if you’re hit. The higher total wins, and no credits are at stake.</p>
+    <span class="small muted">Difficulty</span>
+    <div class="seg seg4" id="ch-diff" role="group" aria-label="Difficulty" style="margin:6px 0 14px"></div>
+    <span class="small muted">Crossings each</span>
+    <div class="seg" id="ch-rounds" role="group" aria-label="Crossings each" style="margin-top:6px"><button type="button" data-r="3" aria-pressed="false">3 crossings</button><button type="button" data-r="5" aria-pressed="true">5 crossings</button></div>
+    <div class="actions"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-gold" id="ch-send">Send challenge</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-newbattle" aria-labelledby="nb-title">
+  <div class="dlg">
+    <span class="demo-tag">CASE BATTLE</span>
+    <h2 id="nb-title">Create a case battle</h2>
+    <span class="small muted">Who are you battling?</span>
+    <div class="nb-friends" id="nb-friends"></div>
+    <span class="small muted">Add cases</span>
+    <div class="nb-add" id="nb-add"></div>
+    <div class="nb-chosen" id="nb-chosen"></div>
+    <p class="small" id="nb-cost"></p>
+    <div class="actions"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-gold" id="nb-send">Send invite</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-battle" aria-labelledby="bt-title">
+  <div class="dlg">
+    <span class="demo-tag">CASE BATTLE</span>
+    <h2 id="bt-title">Battle</h2>
+    <p class="small muted" id="bt-sub"></p>
+    <div class="bt-cases" id="bt-cases"></div>
+    <div class="bt-grid" id="bt-grid"></div>
+    <div class="result" id="bt-result" aria-live="polite" style="margin-top:12px"></div>
+    <div class="actions"><button class="btn btn-ghost" id="bt-skip">Skip to results</button><button class="btn btn-gold" data-close>Close</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-player" aria-labelledby="pl-title">
+  <div class="dlg" id="player-body"></div>
+</dialog>
+
+<div class="bigwin" id="bigwin" hidden role="status">
+  <div class="bigwin-inner"><div class="t"></div><div class="a"></div><div class="n"></div></div>
+</div>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+<script src="lp-platform.js"></script>
+<script src="app.js"></script>
+</body></html>
